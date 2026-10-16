@@ -38,6 +38,9 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
 			? window.location.origin
 			: defaultApiUrl);
 	const authToken = accountsV.selectedAccount?.token ?? null;
+	// behind a proxy that authenticates every request (see deploy/), the web
+	// client has no stored account: ask the server who we are instead.
+	const proxyMode = Platform.OS === "web" && !accountsV.selectedAccount;
 	const auth = useMemo(() => ({ apiUrl, authToken }), [apiUrl, authToken]);
 
 	// the watch page can play a cast (android tv) with the caster's account
@@ -69,11 +72,11 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
 				lang: i18n.resolvedLanguage,
 			}),
 		placeholderData: accountsV.selectedAccount ?? undefined,
-		enabled: !!accountsV.selectedAccount,
+		enabled: !!accountsV.selectedAccount || proxyMode,
 	});
 	useEffect(() => {
-		if (userError) router.replace("/login");
-	}, [userError, router]);
+		if (userError && !proxyMode) router.replace("/login");
+	}, [userError, router, proxyMode]);
 
 	// Persist fresh server data into the stored account on launch. Depends only
 	// on the fetch result — never on the selected account — so the storage write
@@ -96,9 +99,20 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
 		queryClient.resetQueries();
 	}, [curId, queryClient]);
 
+	const accountsCtx = useMemo(
+		() =>
+			proxyMode && user && !userIsPlaceholder
+				? {
+						selectedAccount: { ...user, apiUrl: "", token: "", selected: true },
+						accounts: [],
+					}
+				: accountsV,
+		[proxyMode, user, userIsPlaceholder, accountsV],
+	);
+
 	return (
 		<AccountContext.Provider value={auth}>
-			<AccountsContext.Provider value={accountsV}>
+			<AccountsContext.Provider value={accountsCtx}>
 				{children}
 			</AccountsContext.Provider>
 		</AccountContext.Provider>

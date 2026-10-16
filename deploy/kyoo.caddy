@@ -1,0 +1,33 @@
+kyoo.cloudrumbles.tech {
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Robots-Tag "noindex, nofollow, noarchive"
+		Referrer-Policy "no-referrer"
+		-Server
+	}
+	route {
+		# static pwa files only: ios fetches the manifest without cookies when adding to home screen
+		@pwaAssets path /site.webmanifest /web-app-manifest-192x192.png /web-app-manifest-512x512.png /apple-touch-icon.png /favicon.ico /favicon-dark.ico /favicon-96x96.png /favicon-96x96-dark.png
+		handle /site.webmanifest {
+			header Content-Type application/manifest+json
+			header Cache-Control no-cache
+			root * /etc/caddy/kyoo-sso
+			file_server
+		}
+		handle @pwaAssets {
+			reverse_proxy 127.0.0.1:8901
+		}
+		forward_auth 127.0.0.1:8787 {
+			uri /queue/api/site-auth/check
+		}
+		handle {
+			# hls segments and the scanner websocket must stream, never buffer
+			# whoever passes the google gate is shah: kyoo itself never asks for a login
+			reverse_proxy 127.0.0.1:8901 {
+				header_up Authorization "Bearer {$KYOO_SHAH_TOKEN}"
+				flush_interval -1
+			}
+		}
+	}
+}
