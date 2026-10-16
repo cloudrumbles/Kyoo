@@ -14,7 +14,7 @@ services:
     image: ghcr.io/zoriya/kyoo_auth@sha256:7124ed01e885d69315a5eeb56b04f72c88ddc76294aa6799fb51964727fc2e5e
     mem_limit: 192m
   front:
-    image: ghcr.io/zoriya/kyoo_front@sha256:defabd0f20b75766b242602d13c55b460f87e319ee81a742c51b2c9323a32cfd
+    image: kyoo_front:cloudrumbles
     mem_limit: 384m
   scanner:
     image: ghcr.io/zoriya/kyoo_scanner@sha256:d6b920804d680b35e553f60f27e6a7d79f4980fa3af6da546d874b0d7885b139
