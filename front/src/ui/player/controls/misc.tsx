@@ -14,6 +14,7 @@ import { type PressableProps, View } from "react-native";
 import { usePlayer, usePlayerState } from "react-native-omni";
 import { IconButton, Slider, Spinner, tooltip } from "~/primitives";
 import { cn } from "~/utils";
+import { isFullscreen, toggleFullscreen } from "../fullscreen";
 import { setPlayerMuted, setPlayerVolume } from "../imperative";
 
 export const PlayButton = (
@@ -63,21 +64,6 @@ export const CastButton = (
 	);
 };
 
-export const toggleFullscreen = async (set?: boolean) => {
-	set ??= document.fullscreenElement === null;
-	try {
-		if (set) {
-			await document.body.requestFullscreen({ navigationUI: "hide" });
-			await screen.orientation.lock("landscape");
-		} else {
-			if (document.fullscreenElement) await document.exitFullscreen();
-			screen.orientation.unlock();
-		}
-	} catch (e) {
-		console.error("failed to toggle fullscreen", e);
-	}
-};
-
 export const FullscreenButton = (
 	props: Partial<ComponentProps<typeof IconButton<PressableProps>>>,
 ) => {
@@ -86,9 +72,18 @@ export const FullscreenButton = (
 
 	const [fullscreen, setFullscreen] = useState(false);
 	useEffect(() => {
-		const update = () => setFullscreen(document.fullscreenElement !== null);
+		const update = () => setFullscreen(isFullscreen());
+		update();
 		document.addEventListener("fullscreenchange", update);
-		return () => document.removeEventListener("fullscreenchange", update);
+		// Safari dispatches these on the video, rather than on document.
+		// Capture lets us handle them even if OmniView replaces its video.
+		document.addEventListener("webkitbeginfullscreen", update, true);
+		document.addEventListener("webkitendfullscreen", update, true);
+		return () => {
+			document.removeEventListener("fullscreenchange", update);
+			document.removeEventListener("webkitbeginfullscreen", update, true);
+			document.removeEventListener("webkitendfullscreen", update, true);
+		};
 	}, []);
 
 	return (

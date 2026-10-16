@@ -26,7 +26,7 @@ import { useQueryState } from "~/utils";
 import { CastingScreen } from "./casting-screen";
 import { Controls, LoadingIndicator } from "./controls";
 import { ErrorPopup } from "./controls/error-popup";
-import { toggleFullscreen } from "./controls/misc";
+import { toggleFullscreen } from "./fullscreen";
 import { PlayModeContext } from "./controls/tracks-menu";
 import { EntriesMenu } from "./entries-menu";
 import { setPlayerSource } from "./imperative";
@@ -337,9 +337,9 @@ const PlayerContent = ({
 
 	useEffect(() => {
 		if (Platform.OS !== "web") return;
-		if (/Mobi/i.test(window.navigator.userAgent)) toggleFullscreen(true);
+		// iPhone Safari only allows video fullscreen from a user gesture.
 		return () => {
-			if (!document.location.href.includes("/watch")) toggleFullscreen(false);
+			if (!document.location.href.includes("/watch")) void toggleFullscreen(false);
 		};
 	}, []);
 

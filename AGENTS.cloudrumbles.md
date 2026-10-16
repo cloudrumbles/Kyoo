@@ -42,6 +42,6 @@ The other services (api, auth, scanner, transcoder) run upstream edge images pin
 
 ## Known issues worth improving
 
-- iPhone Safari: the fullscreen button calls `document.body.requestFullscreen()` (`front/src/ui/player/controls/misc.tsx`), which iPhone doesn't support. The fix is to fall back to `video.webkitEnterFullscreen()`.
+- iPhone Safari fullscreen uses native `video.webkitEnterFullscreen()` from the fullscreen button's user gesture (`front/src/ui/player/fullscreen.ts`); desktop continues to use document fullscreen. iPhone's native fullscreen displays Safari's own video UI rather than Kyoo's HTML overlays.
 - Chromium on Linux can't decode the AC3 audio in these files. HLS mode (AAC transcode) works.
 - The transcoder always downmixes to stereo (`-ac 2` in `transcoder/src/audiostream.go`), so 5.1 sources lose surround. A FLAC or multichannel Opus rendition would keep it.
