@@ -6,6 +6,7 @@ import type { KImage } from "~/models";
 import { useToken } from "~/providers/account-context";
 import { cn } from "~/utils";
 import KyooLogo from "~public/icon.svg";
+import { designTokens } from "../../../design/tokens";
 import { Skeleton } from "../skeleton";
 
 const Img = withUniwind(EImage);
@@ -83,13 +84,13 @@ export const PosterPlaceholder = ({
 	return (
 		<View
 			className={cn(
-				"aspect-2/3 items-center justify-center overflow-hidden rounded-sm bg-[#263c53]",
+				"aspect-2/3 items-center justify-center overflow-hidden rounded-sm bg-kyoo-surface-case",
 				className,
 			)}
 			{...props}
 		>
 			<KyooLogo
-				color="#8199aa"
+				color={designTokens.colors.textSoft}
 				style={{ width: "50%", aspectRatio: "289.35/296.15" }}
 			/>
 			{children}

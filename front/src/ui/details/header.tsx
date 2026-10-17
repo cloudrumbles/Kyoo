@@ -187,11 +187,11 @@ export const TitleLine = ({
 			/>
 			<View className="flex-1 self-center max-sm:mt-7 max-sm:items-center sm:pl-10 sm:max-md:self-end md:max-lg:mt-5">
 				<P className="max-sm:text-center">
-					<H1 className="font-headers text-[44px] leading-[.96] font-bold text-[#f5efe1] sm:text-[64px]">{name}</H1>
-					{date && <P className="mt-1 text-lg text-[#a9b8c7] sm:text-xl"> ({date})</P>}
+					<H1 className="font-headers text-[44px] leading-[.96] font-bold text-kyoo-text-primary sm:text-[64px]">{name}</H1>
+					{date && <P className="mt-1 text-lg text-kyoo-text-muted sm:text-xl"> ({date})</P>}
 				</P>
 				{tagline && (
-					<P className="mt-2 text-base text-[#c9d5df] max-sm:text-center sm:text-xl">
+					<P className="mt-2 text-base text-kyoo-text-body max-sm:text-center sm:text-xl">
 						{tagline}
 					</P>
 				)}

@@ -19,12 +19,12 @@ export const Header = ({
 	return (
 		<View scrollSnapAlign="start">
 			<View className="video-section-rule mb-4 flex-row items-end justify-between gap-3 pb-3">
-				<H3 className="flex-1 font-headers text-[29px] leading-8 font-bold text-[#f5efe1] sm:text-[34px]">
+				<H3 className="flex-1 font-headers text-[29px] leading-8 font-bold text-kyoo-text-primary sm:text-[34px]">
 					{title}
 				</H3>
 				{action && href ? (
 					<Link href={href} className="rounded-sm px-1 py-2">
-						<P className="text-xs font-semibold text-[#f0c875] sm:text-sm">
+						<P className="text-xs font-semibold text-kyoo-accent sm:text-sm">
 							{action}
 						</P>
 					</Link>

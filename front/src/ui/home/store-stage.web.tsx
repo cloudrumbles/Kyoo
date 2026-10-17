@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { designTokens } from "../../../design/tokens";
 import type { CanvasTexture, Group, MeshBasicMaterial, Object3D } from "three";
 
 export type RentalCase = {
@@ -37,10 +38,12 @@ type CaseMesh = {
 	artworkAttempted: boolean;
 };
 
-const CW = 1.44;
-const CH = 2.16;
-const CD = .16;
-const STEP = 1.65;
+const C = designTokens.colors;
+const S = designTokens.scene;
+const CW = S.case.width;
+const CH = S.case.height;
+const CD = S.case.depth;
+const STEP = CW + S.case.gap;
 
 function wrap(g: CanvasRenderingContext2D, text: string, x: number, y: number, width: number, dy: number, limit: number) {
 	let line = "";
@@ -60,21 +63,22 @@ function wrap(g: CanvasRenderingContext2D, text: string, x: number, y: number, w
 
 function paintSleeve(item: RentalCase) {
 	const canvas = document.createElement("canvas");
-	canvas.width = 320;
-	canvas.height = 480;
+	canvas.width = S.case.coverWidth;
+	canvas.height = S.case.coverHeight;
 	const g = canvas.getContext("2d", { alpha: false })!;
-	const band = item.kind === "episode" ? "#967043" : item.kind === "film" ? "#546441" : "#2c659d";
+	g.scale(canvas.width / 320, canvas.height / 480);
+	const band = item.kind === "episode" ? C.caseBandEpisode : item.kind === "film" ? C.caseBandFilm : C.caseBandSeries;
 	const paint = (image?: HTMLImageElement) => {
-		g.fillStyle = "#071523";
+		g.fillStyle = C.nightInk;
 		g.fillRect(0, 0, 320, 480);
 		g.fillStyle = band;
 		g.fillRect(0, 0, 320, 39);
-		g.fillStyle = "#efe2cb";
-		g.font = "700 17px Arial";
+		g.fillStyle = C.textWarm;
+		g.font = `700 ${designTokens.type.caseLabel} ${designTokens.fonts.caseBody}`;
 		g.fillText("KYOO", 16, 26);
-		g.font = "12px Arial";
+		g.font = `${designTokens.type.caseSmall} ${designTokens.fonts.caseBody}`;
 		g.fillText(item.kind === "episode" ? "EPISODE" : item.kind === "collection" ? "BOX SET" : item.kind === "film" ? "FILM" : "SERIES", 244, 25);
-		g.fillStyle = "#24394d";
+		g.fillStyle = C.surfaceCase;
 		g.fillRect(10, 47, 300, 329);
 		if (image) {
 			const ratio = 300 / 329;
@@ -84,7 +88,7 @@ function paintSleeve(item: RentalCase) {
 			else { sh = image.naturalWidth / ratio; sy = (image.naturalHeight - sh) / 2; }
 			g.drawImage(image, sx, sy, sw, sh, 10, 47, 300, 329);
 		} else {
-			g.strokeStyle = "#48617a";
+			g.strokeStyle = C.caseEdge;
 			g.lineWidth = 2;
 			for (let j = 0; j < 4; j++) g.strokeRect(22 + j * 11, 66 + j * 11, 275 - j * 22, 278 - j * 22);
 		}
@@ -93,21 +97,21 @@ function paintSleeve(item: RentalCase) {
 		glow.addColorStop(1, "rgba(10,22,36,.54)");
 		g.fillStyle = glow;
 		g.fillRect(10, 263, 300, 113);
-		g.fillStyle = "#eee6d6";
+		g.fillStyle = C.paper;
 		g.fillRect(0, 379, 320, 101);
-		g.fillStyle = "#17263a";
-		g.font = '700 28px "Barlow Condensed", Arial';
+		g.fillStyle = C.textOnLight;
+		g.font = `700 ${designTokens.type.caseTitle} ${designTokens.fonts.caseTitle}`;
 		const end = wrap(g, item.title, 17, 410, 288, 27, 2);
-		g.fillStyle = "#606b75";
-		g.font = "12px Arial";
+		g.fillStyle = C.textOnLightMuted;
+		g.font = `${designTokens.type.caseSmall} ${designTokens.fonts.caseBody}`;
 		wrap(g, item.subtitle || "From your library", 17, Math.min(456, end + 4), 288, 16, 1);
 		if ((item.progress ?? 0) > 0) {
-			g.fillStyle = "#bbb9b3";
+			g.fillStyle = C.caseProgressTrack;
 			g.fillRect(0, 474, 320, 6);
-			g.fillStyle = "#d9ad62";
+			g.fillStyle = C.accent;
 			g.fillRect(0, 474, 320 * Math.min(item.progress!, 100) / 100, 6);
 		}
-		g.fillStyle = "rgba(255,255,255,.16)";
+		g.fillStyle = C.casePaintGlare;
 		g.fillRect(1, 0, 3, 480);
 	};
 	paint();
@@ -116,29 +120,30 @@ function paintSleeve(item: RentalCase) {
 
 function paintBack(item: RentalCase) {
 	const canvas = document.createElement("canvas");
-	canvas.width = 320;
-	canvas.height = 480;
+	canvas.width = S.case.coverWidth;
+	canvas.height = S.case.coverHeight;
 	const g = canvas.getContext("2d", { alpha: false })!;
-	g.fillStyle = "#183555";
+	g.scale(canvas.width / 320, canvas.height / 480);
+	g.fillStyle = C.caseBack;
 	g.fillRect(0, 0, 320, 480);
-	g.fillStyle = "#29639a";
+	g.fillStyle = C.caseBackBand;
 	g.fillRect(0, 0, 320, 36);
-	g.fillStyle = "#d9ad62";
+	g.fillStyle = C.brass;
 	g.fillRect(23, 65, 273, 2);
-	g.fillStyle = "#f5eedd";
-	g.font = '700 35px "Barlow Condensed", Arial';
+	g.fillStyle = C.textPrimary;
+	g.font = `700 ${designTokens.type.caseBackTitle} ${designTokens.fonts.caseTitle}`;
 	const y = wrap(g, item.title, 22, 108, 270, 36, 3);
-	g.font = "700 12px Arial";
-	g.fillStyle = "#d9ad62";
+	g.font = `700 ${designTokens.type.caseSmall} ${designTokens.fonts.caseBody}`;
+	g.fillStyle = C.brass;
 	g.fillText(item.kind.toUpperCase(), 22, Math.min(y + 17, 215));
-	g.strokeStyle = "#6886a0";
+	g.strokeStyle = C.caseBackStroke;
 	g.strokeRect(22, 232, 275, 188);
-	g.fillStyle = "#f5eedd";
-	g.font = "14px Arial";
+	g.fillStyle = C.textPrimary;
+	g.font = `${designTokens.type.caseBody} ${designTokens.fonts.caseBody}`;
 	wrap(g, item.description || item.subtitle || "Visit this title for details.", 34, 259, 247, 24, 6);
-	g.fillStyle = "#d9ad62";
+	g.fillStyle = C.brass;
 	g.fillRect(22, 451, 86, 5);
-	g.font = "700 12px Arial";
+	g.font = `700 ${designTokens.type.caseSmall} ${designTokens.fonts.caseBody}`;
 	g.fillText("KYOO VIDEO", 22, 443);
 	return canvas;
 }
@@ -152,57 +157,61 @@ async function start(canvas: HTMLCanvasElement, handlers: { pick: (i: number) =>
 	renderer.outputColorSpace = THREE.SRGBColorSpace;
 	renderer.shadowMap.enabled = false;
 	const scene = new THREE.Scene();
-	scene.background = new THREE.Color("#101e2d");
-	const camera = new THREE.PerspectiveCamera(42, 1, .1, 55);
-	camera.position.set(0, .78, 5.0);
-	camera.lookAt(0, .2, 0);
-	scene.add(new THREE.HemisphereLight(0xfff2d8, 0x253e58, 1.8));
-	const light = new THREE.DirectionalLight(0xffd6a5, 1.5);
-	light.position.set(-3.5, 4, 4);
+	scene.background = new THREE.Color(C.sceneBackground);
+	const camera = new THREE.PerspectiveCamera(S.camera.fieldOfView, 1, S.camera.near, S.camera.far);
+	camera.position.set(0, S.camera.y, S.camera.distance);
+	camera.lookAt(0, S.camera.targetY, 0);
+	scene.add(new THREE.HemisphereLight(S.lights.ambient.sky, S.lights.ambient.ground, S.lights.ambient.intensity));
+	const light = new THREE.DirectionalLight(S.lights.key.color, S.lights.key.intensity);
+	light.position.set(...S.lights.key.position);
 	scene.add(light);
-	const fill = new THREE.DirectionalLight(0xbed5ed, .9);
-	fill.position.set(3, 2, -1);
+	const fill = new THREE.DirectionalLight(S.lights.fill.color, S.lights.fill.intensity);
+	fill.position.set(...S.lights.fill.position);
 	scene.add(fill);
 
-	const wood = new THREE.MeshStandardMaterial({ color: "#382d29", roughness: .95 });
-	const top = new THREE.MeshStandardMaterial({ color: "#584539", roughness: .9 });
-	const steel = new THREE.MeshStandardMaterial({ color: "#1c3a59", roughness: .65, metalness: .18 });
-	const gold = new THREE.MeshBasicMaterial({ color: "#b69260" });
+	const wood = new THREE.MeshStandardMaterial({ color: C.walnut, roughness: S.materials.woodRoughness });
+	const top = new THREE.MeshStandardMaterial({ color: C.woodTop, roughness: S.materials.shelfRoughness });
+	const steel = new THREE.MeshStandardMaterial({ color: C.enamel, roughness: S.materials.steelRoughness, metalness: S.materials.steelMetalness });
+	const gold = new THREE.MeshBasicMaterial({ color: C.sceneBrass });
 	const shells = {
-		episode: new THREE.MeshStandardMaterial({ color: "#8a6547", roughness: .31 }),
-		series: new THREE.MeshStandardMaterial({ color: "#285e95", roughness: .3, metalness: .12 }),
-		film: new THREE.MeshStandardMaterial({ color: "#536744", roughness: .32 }),
-		collection: new THREE.MeshStandardMaterial({ color: "#285e95", roughness: .3, metalness: .12 }),
+		episode: new THREE.MeshStandardMaterial({ color: C.caseShellEpisode, roughness: S.materials.shellRoughness }),
+		series: new THREE.MeshStandardMaterial({ color: C.caseShellSeries, roughness: S.materials.shellRoughness, metalness: S.materials.shellMetalness }),
+		film: new THREE.MeshStandardMaterial({ color: C.caseShellFilm, roughness: S.materials.shellRoughness }),
+		collection: new THREE.MeshStandardMaterial({ color: C.caseShellSeries, roughness: S.materials.shellRoughness, metalness: S.materials.shellMetalness }),
 	};
-	const shadowMaterial = new THREE.MeshBasicMaterial({ color: "#0a1220", transparent: true, opacity: .43, depthWrite: false });
-	const spineMaterial = new THREE.MeshStandardMaterial({ color: "#6c94b8", metalness: .08, roughness: .48 });
+	const shadowMaterial = new THREE.MeshBasicMaterial({ color: C.caseShadowInk, transparent: true, opacity: S.materials.shadowOpacity, depthWrite: false });
+	const spineMaterial = new THREE.MeshStandardMaterial({ color: C.caseSpine, metalness: S.materials.spineMetalness, roughness: S.materials.spineRoughness });
 	const resources: Array<import("three").BufferGeometry> = [];
-	const box = (w: number, h: number, d: number, m: import("three").Material, x: number, y: number, z: number) => {
+	const box = (rect: readonly number[], material: import("three").Material) => {
+		const [w, h, d, x, y, z] = rect;
 		const geo = new THREE.BoxGeometry(w, h, d);
 		resources.push(geo);
-		const mesh = new THREE.Mesh(geo, m);
+		const mesh = new THREE.Mesh(geo, material);
 		mesh.position.set(x, y, z);
 		scene.add(mesh);
 	};
-	box(32, .17, 1.8, top, 0, -1.22, -.05);
-	box(32, .24, .14, wood, 0, -1.4, .8);
-	box(32, .04, .06, gold, 0, -1.29, .89);
-	box(32, .22, 1.5, wood, 0, -2.52, -.05);
-	box(32, .045, .08, gold, 0, -2.37, .8);
-	box(32, .12, .4, steel, 0, 2.15, -.5);
-	box(32, .025, .04, gold, 0, 2.06, -.23);
-	for (const x of [-9, -6, -3, 3, 6, 9]) box(.065, 7, .12, steel, x, -.2, -1.47);
-	const bgGeo = new THREE.PlaneGeometry(45, 18);
+	const architecture = S.architecture;
+	box(architecture.shelfTop, top);
+	box(architecture.shelfFront, wood);
+	box(architecture.shelfTrim, gold);
+	box(architecture.lowerShelf, wood);
+	box(architecture.lowerTrim, gold);
+	box(architecture.upperRail, steel);
+	box(architecture.upperTrim, gold);
+	for (const x of architecture.uprightPositions) {
+		box([...architecture.upright, x, architecture.uprightY, architecture.uprightXZ[0]], steel);
+	}
+	const bgGeo = new THREE.PlaneGeometry(architecture.wall[0], architecture.wall[1]);
 	resources.push(bgGeo);
-	const bgMat = new THREE.MeshBasicMaterial({ color: "#152a40" });
+	const bgMat = new THREE.MeshBasicMaterial({ color: C.sceneWall });
 	const wall = new THREE.Mesh(bgGeo, bgMat);
-	wall.position.z = -2.1;
+	wall.position.z = architecture.wall[2];
 	scene.add(wall);
 	// Shared case geometry and case-shell materials keep GPU submissions small.
 	const caseGeo = new THREE.BoxGeometry(CW, CH, CD);
-	const faceGeo = new THREE.PlaneGeometry(CW - .07, CH - .05);
-	const sideGeo = new THREE.PlaneGeometry(CD, CH - .06);
-	const shadowGeo = new THREE.PlaneGeometry(CW + .12, CH + .1);
+	const faceGeo = new THREE.PlaneGeometry(CW - S.case.faceInsetWidth, CH - S.case.faceInsetHeight);
+	const sideGeo = new THREE.PlaneGeometry(CD, CH - S.case.spineInsetHeight);
+	const shadowGeo = new THREE.PlaneGeometry(CW + S.case.shadowExtraWidth, CH + S.case.shadowExtraHeight);
 	resources.push(caseGeo, faceGeo, sideGeo, shadowGeo);
 
 	let cards: CaseMesh[] = [];
@@ -216,18 +225,18 @@ async function start(canvas: HTMLCanvasElement, handlers: { pick: (i: number) =>
 		raf = 0;
 		if (dead || document.hidden) return;
 		let moving = false;
-		const speed = reduce ? 1 : .24;
+		const speed = reduce ? 1 : S.motion.easing;
 		cards.forEach((c, i) => {
 			const diff = i - selected;
 			const focus = opened && diff === 0;
-			const tx = diff * (opened ? STEP * 1.2 : STEP);
-			const ty = focus ? .38 : 0;
-			const tz = focus ? .68 : -Math.min(Math.abs(diff) * .16, .6);
-			const tr = focus ? (flipped ? Math.PI : .13) : diff === 0 ? .13 : Math.max(-.37, Math.min(.37, diff * -.19));
-			const ts = focus ? 1.25 : 1;
+			const tx = diff * (opened ? STEP * S.case.focusSpacing : STEP);
+			const ty = focus ? S.case.focusLift : S.case.idleY;
+			const tz = focus ? S.case.focusDepth : -Math.min(Math.abs(diff) * S.case.adjacentDepth, S.case.maxAdjacentDepth);
+			const tr = focus ? (flipped ? Math.PI : S.case.focusAngle) : diff === 0 ? S.case.restingAngle : Math.max(-S.case.maxAdjacentAngle, Math.min(S.case.maxAdjacentAngle, diff * -S.case.adjacentAngle));
+			const ts = focus ? S.case.focusScale : 1;
 			const d = Math.abs(tx - c.group.position.x) + Math.abs(ty - c.group.position.y) +
 				Math.abs(tz - c.group.position.z) + Math.abs(tr - c.group.rotation.y) + Math.abs(ts - c.group.scale.x);
-			if (d > .003) moving = true;
+			if (d > S.motion.settleThreshold) moving = true;
 			c.group.position.x += (tx - c.group.position.x) * speed;
 			c.group.position.y += (ty - c.group.position.y) * speed;
 			c.group.position.z += (tz - c.group.position.z) * speed;
@@ -246,7 +255,7 @@ async function start(canvas: HTMLCanvasElement, handlers: { pick: (i: number) =>
 		const rect = canvas.getBoundingClientRect();
 		const w = Math.max(1, Math.round(rect.width));
 		const h = Math.max(1, Math.round(rect.height));
-		const dpr = Math.min(window.devicePixelRatio || 1, w < 600 ? 1.25 : 1.5);
+		const dpr = Math.min(window.devicePixelRatio || 1, w < S.performance.mobileBreakpointPx ? S.performance.dprMobile : S.performance.dprDesktop);
 		renderer.setPixelRatio(dpr);
 		renderer.setSize(w, h, false);
 		canvas.dataset.pixelRatio = String(dpr);
@@ -271,8 +280,8 @@ async function start(canvas: HTMLCanvasElement, handlers: { pick: (i: number) =>
 		if (!down) return;
 		const dx = e.clientX - down.x, dy = e.clientY - down.y;
 		down = null;
-		if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy) * 1.4) { handlers.shift(dx < 0 ? 1 : -1); return; }
-		if (Math.abs(dy) > 24) return;
+		if (Math.abs(dx) > S.motion.swipeThresholdPx && Math.abs(dx) > Math.abs(dy) * 1.4) { handlers.shift(dx < 0 ? 1 : -1); return; }
+		if (Math.abs(dy) > S.motion.tapTolerancePx) return;
 		const rect = canvas.getBoundingClientRect();
 		pointer.set((e.clientX - rect.left) / rect.width * 2 - 1, -(e.clientY - rect.top) / rect.height * 2 + 1);
 		ray.setFromCamera(pointer, camera);
@@ -300,7 +309,7 @@ async function start(canvas: HTMLCanvasElement, handlers: { pick: (i: number) =>
 	function loadNearbyArtwork() {
 		cards.forEach((card, i) => {
 			const art = currentItems[i]?.artwork;
-			if (!art || card.artworkAttempted || Math.abs(i - selected) > 3) return;
+			if (!art || card.artworkAttempted || Math.abs(i - selected) > S.performance.artworkRadius) return;
 			card.artworkAttempted = true;
 			const img = new Image();
 			card.image = img;
@@ -321,7 +330,7 @@ async function start(canvas: HTMLCanvasElement, handlers: { pick: (i: number) =>
 	function changeItems(items: RentalCase[]) {
 		if (dead) return;
 		clearCases();
-		currentItems = items.slice(0, 12);
+		currentItems = items.slice(0, S.case.maxCount);
 		selected = Math.min(selected, Math.max(currentItems.length - 1, 0));
 		currentItems.forEach((item, i) => {
 			const group = new THREE.Group();
@@ -331,12 +340,12 @@ async function start(canvas: HTMLCanvasElement, handlers: { pick: (i: number) =>
 			const { canvas: sleeve, paint } = paintSleeve(item);
 			const texture = new THREE.CanvasTexture(sleeve);
 			texture.colorSpace = THREE.SRGBColorSpace;
-			texture.anisotropy = 2;
+			texture.anisotropy = S.performance.textureAnisotropy;
 			const material = new THREE.MeshBasicMaterial({ map: texture, toneMapped: false });
 			const front = new THREE.Mesh(faceGeo, material);
 			front.position.z = CD / 2 + .004;
 			group.add(front);
-			const backMat = new THREE.MeshBasicMaterial({ color: "#173957", side: THREE.DoubleSide });
+			const backMat = new THREE.MeshBasicMaterial({ color: C.caseBack, side: THREE.DoubleSide });
 			const back = new THREE.Mesh(faceGeo, backMat);
 			back.rotation.y = Math.PI;
 			back.position.z = -CD / 2 - .005;
@@ -346,9 +355,9 @@ async function start(canvas: HTMLCanvasElement, handlers: { pick: (i: number) =>
 			side.rotation.y = -Math.PI / 2;
 			group.add(side);
 			const shadow = new THREE.Mesh(shadowGeo, shadowMaterial);
-			shadow.position.set(.10, -.12, -.23);
+			shadow.position.set(S.case.shadowOffsetX, S.case.shadowOffsetY, S.case.shadowOffsetZ);
 			group.add(shadow);
-			group.position.set((i - selected) * STEP, 0, -.23);
+			group.position.set((i - selected) * STEP, S.case.idleY, S.case.idleZ);
 			scene.add(group);
 			const card: CaseMesh = { group, texture, material, back: backMat, backTexture: null, image: null, artworkAttempted: false };
 			cards.push(card);
@@ -368,7 +377,7 @@ async function start(canvas: HTMLCanvasElement, handlers: { pick: (i: number) =>
 			backTexture.colorSpace = THREE.SRGBColorSpace;
 			card.backTexture = backTexture;
 			card.back.map = backTexture;
-			card.back.color.set("#ffffff");
+			card.back.color.set(C.white);
 			card.back.needsUpdate = true;
 		});
 		schedule();

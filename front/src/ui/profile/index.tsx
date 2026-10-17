@@ -71,27 +71,27 @@ const ProfileHeader = ({
 				query={ProfilePage.userQuery(slug)}
 				Render={(user) => (
 					<View className="video-feature flex-row items-center gap-4 rounded-sm p-5">
-						<View className="h-13 w-13 shrink-0 items-center justify-center rounded-full border-[3px] border-[#f0c875]">
-							<View className="h-3 w-3 rounded-full bg-[#f0c875]" />
+						<View className="h-13 w-13 shrink-0 items-center justify-center rounded-full border-[3px] border-kyoo-accent">
+							<View className="h-3 w-3 rounded-full bg-kyoo-accent" />
 						</View>
 						<View className="min-w-0 flex-1">
-							<P className="text-xs font-semibold tracking-wide text-[#f0c875]">My collection</P>
-							<H1 className="font-headers text-[38px] leading-[1.05] font-bold text-[#f5efe1] sm:text-[46px]">{user.username}</H1>
+							<P className="text-xs font-semibold tracking-wide text-kyoo-accent">My collection</P>
+							<H1 className="font-headers text-[38px] leading-[1.05] font-bold text-kyoo-text-primary sm:text-[46px]">{user.username}</H1>
 						</View>
 					</View>
 				)}
 				Loader={() => (
 					<View className="video-feature flex-row items-center gap-4 rounded-sm p-5">
-						<View className="h-13 w-13 rounded-full border-[3px] border-[#f0c875]" />
+						<View className="h-13 w-13 rounded-full border-[3px] border-kyoo-accent" />
 						<View className="flex-1">
-							<P className="text-[#9fb1c0]">{t("misc.loading")}</P>
+							<P className="text-kyoo-text-muted">{t("misc.loading")}</P>
 						</View>
 					</View>
 				)}
 			/>
 
 			<View>
-				<H3 className="video-section-rule mb-4 pb-3 font-headers text-[32px] font-bold text-[#f5efe1]">Recently watched</H3>
+				<H3 className="video-section-rule mb-4 pb-3 font-headers text-[32px] font-bold text-kyoo-text-primary">Recently watched</H3>
 				<InfiniteFetch
 					query={ProfilePage.historyQuery(slug)}
 					layout={{ ...EntryBox.layout, layout: "horizontal" }}
@@ -126,7 +126,7 @@ const ProfileHeader = ({
 			</View>
 
 			<View>
-				<H3 className="video-section-rule mb-4 pb-3 font-headers text-[32px] font-bold text-[#f5efe1]">My list</H3>
+				<H3 className="video-section-rule mb-4 pb-3 font-headers text-[32px] font-bold text-kyoo-text-primary">My list</H3>
 				<Tabs
 					tabs={statusTabs.map((tab) => ({
 						label: t(tab.translation),

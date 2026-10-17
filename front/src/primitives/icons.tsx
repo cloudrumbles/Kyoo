@@ -63,7 +63,7 @@ export const Icon = ({
 	return (
 		<BaseIcon
 			className={cn(
-				"h-6 w-6 shrink-0 fill-[#c1ced7] dark:fill-[#c1ced7]",
+				"h-6 w-6 shrink-0 fill-kyoo-text-body dark:fill-kyoo-text-body",
 				className,
 			)}
 			{...props}
@@ -132,7 +132,7 @@ export const IconFab = <AsProps = PressableProps>({
 			<Icon
 				icon={icon}
 				className={cn(
-					"fill-[#102034] dark:fill-[#102034]",
+					"fill-kyoo-navigation-ink dark:fill-kyoo-navigation-ink",
 					"group-highlighted:fill-slate-200",
 					iconClassName,
 				)}

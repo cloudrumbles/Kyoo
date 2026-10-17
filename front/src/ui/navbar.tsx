@@ -110,10 +110,10 @@ const NavbarLink = <AsProps = ComponentProps<typeof A>>({
 		>
 			<Icon
 				icon={icon}
-				className="fill-[#e9d9b8] md:hidden dark:fill-[#e9d9b8]"
+				className="fill-kyoo-brass-subtle md:hidden dark:fill-kyoo-brass-subtle"
 			/>
-			<Text className="font-sans text-[10px] text-[#dbe4eb] md:hidden dark:text-[#dbe4eb]">{label}</Text>
-			<Text className="font-sans text-sm font-semibold text-[#dbe4eb] max-md:hidden dark:text-[#dbe4eb]">
+			<Text className="font-sans text-[10px] text-kyoo-text-body md:hidden dark:text-kyoo-text-body">{label}</Text>
+			<Text className="font-sans text-sm font-semibold text-kyoo-text-body max-md:hidden dark:text-kyoo-text-body">
 				{label}
 			</Text>
 		</As>
@@ -134,13 +134,13 @@ export const NavbarTitle = ({
 			{...tooltip(t("navbar.home"))}
 			{...props}
 		>
-			<View className="mr-1 h-7 w-7 items-center justify-center rounded-full border-2 border-[#f0c875]">
-				<View className="h-2 w-2 rounded-full bg-[#f0c875]" />
+			<View className="mr-1 h-7 w-7 items-center justify-center rounded-full border-2 border-kyoo-accent">
+				<View className="h-2 w-2 rounded-full bg-kyoo-accent" />
 			</View>
-			<Text className="font-headers text-[31px] leading-8 font-extrabold text-[#f5efe1]">
+			<Text className="font-headers text-[31px] leading-8 font-extrabold text-kyoo-text-primary">
 				kyoo
 			</Text>
-			<Text className="font-headers text-[27px] leading-8 font-bold text-[#f0c875]">
+			<Text className="font-headers text-[27px] leading-8 font-bold text-kyoo-accent">
 				video
 			</Text>
 		</Link>
@@ -209,7 +209,7 @@ export const SearchBar = ({
 				"mr-2 flex-row items-center overflow-hidden rounded-sm p-0 pl-3",
 				"ring-accent focus-within:ring-3",
 				focused && "ring-3",
-				expanded ? "bg-[#f0ebe2] dark:bg-[#f0ebe2]" : "bg-transparent",
+				expanded ? "bg-kyoo-text-warm dark:bg-kyoo-text-warm" : "bg-transparent",
 				Platform.OS === "web" &&
 					overlayOnSmallScreen &&
 					expanded &&
@@ -247,7 +247,7 @@ export const SearchBar = ({
 				textAlignVertical="center"
 				className={cn(
 					"h-full min-w-0 flex-1 font-sans text-base outline-0",
-					"align-middle text-[#101d30] dark:text-[#101d30]",
+					"align-middle text-kyoo-background dark:text-kyoo-background",
 					!expanded && "w-0 grow-0",
 					className,
 				)}
@@ -434,7 +434,7 @@ export const HeaderBackground = ({
 	return (
 		<>
 			<Animated.View
-				className={cn("absolute z-10 w-full bg-[#101d30]", className)}
+				className={cn("absolute z-10 w-full bg-kyoo-background", className)}
 				style={[{ height }, opacity, style]}
 				{...props}
 			/>

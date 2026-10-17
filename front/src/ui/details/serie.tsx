@@ -20,7 +20,7 @@ import { InfoShelf } from "./shelf";
 import { Staff } from "./staff";
 
 export const SvgWave = (_props: ComponentProps<typeof Svg>) => (
-	<View className="h-1 w-full bg-[#344b62]" />
+	<View className="h-1 w-full bg-kyoo-border" />
 );
 
 export const NextUp = ({
@@ -39,7 +39,7 @@ export const NextUp = ({
 
 	return (
 		<View className="m-4 flex-1">
-			<Container className="overflow-hidden rounded-sm border border-[#344b62] bg-card py-4">
+			<Container className="overflow-hidden rounded-sm border border-kyoo-border bg-card py-4">
 				<H2 className="mb-4 ml-2">{t("show.nextUp")}</H2>
 				<EntryLine
 					{...entry}
@@ -65,7 +65,7 @@ NextUp.Loader = () => {
 
 	return (
 		<View className="m-4 flex-1">
-			<Container className="overflow-hidden rounded-sm border border-[#344b62] bg-card py-4">
+			<Container className="overflow-hidden rounded-sm border border-kyoo-border bg-card py-4">
 				<H2 className="ml-4">{t("show.nextUp")}</H2>
 				<EntryLine.Loader />
 			</Container>

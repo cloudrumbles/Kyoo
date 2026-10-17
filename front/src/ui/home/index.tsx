@@ -1,4 +1,5 @@
 import { ScrollView, RefreshControl, View } from "react-native";
+import { designTokens } from "../../../design/tokens";
 import { useRefresh } from "~/query";
 import { Header as FeaturedHeader } from "./header";
 import { NextupList } from "./nextup";
@@ -16,8 +17,8 @@ export const HomePage = () => {
 				<RefreshControl
 					refreshing={isRefreshing}
 					onRefresh={refresh}
-					tintColor="#f0c875"
-					colors={["#f0c875"]}
+					tintColor={designTokens.colors.accent}
+					colors={[designTokens.colors.accent]}
 				/>
 			}
 			contentContainerStyle={{ paddingBottom: 84 }}

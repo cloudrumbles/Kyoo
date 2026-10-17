@@ -102,11 +102,11 @@ export const ItemGrid = ({
 			</PosterBackground>
 			<P
 				numberOfLines={2}
-				className="mt-3 w-full text-left text-[13px] leading-5 font-semibold text-[#f3ede0] group-highlighted:text-accent sm:text-sm"
+				className="mt-3 w-full text-left text-[13px] leading-5 font-semibold text-kyoo-text-primary group-highlighted:text-accent sm:text-sm"
 			>
 				{name}
 			</P>
-			{subtitle && <SubP numberOfLines={1} className="w-full text-left text-xs text-[#9fb1c0]">{subtitle}</SubP>}
+			{subtitle && <SubP numberOfLines={1} className="w-full text-left text-xs text-kyoo-text-muted">{subtitle}</SubP>}
 		</Link>
 	);
 };

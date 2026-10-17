@@ -5,8 +5,10 @@
 	"version": "1.0.0",
 	"scripts": {
 		"postinstall": "bun ./scripts/postinstall.ts",
-		"dev": "expo start --clear",
-		"web": "EXPO_NO_TELEMETRY=true bun ./node_modules/expo/bin/cli export -p web",
+		"dev": "bun ./scripts/generate-design-tokens.ts && expo start --clear",
+		"tokens": "bun ./scripts/generate-design-tokens.ts",
+		"tokens:check": "bun ./scripts/generate-design-tokens.ts --check",
+		"web": "bun ./scripts/generate-design-tokens.ts && EXPO_NO_TELEMETRY=true bun ./node_modules/expo/bin/cli export -p web",
 		"apk": "eas build --profile preview --platform android --non-interactive --json",
 		"apk:dev": "eas build --profile development --platform android --non-interactive",
 		"lint": "biome lint .",

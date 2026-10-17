@@ -29,10 +29,10 @@ const Shelf = ({
 	return (
 		<View className="mb-12">
 			<View className="video-section-rule mb-5 flex-row items-end gap-3 pb-3">
-				<H2 className="font-headers text-[31px] leading-8 font-bold text-[#f5efe1] sm:text-[36px]">
+				<H2 className="font-headers text-[31px] leading-8 font-bold text-kyoo-text-primary sm:text-[36px]">
 					{title}
 				</H2>
-				<P className="mb-0.5 text-xs font-medium text-[#8da3b5]">
+				<P className="mb-0.5 text-xs font-medium text-kyoo-text-subtle">
 					{items.length} {items.length === 1 ? "title" : "titles"}
 				</P>
 			</View>
@@ -42,13 +42,13 @@ const Shelf = ({
 						<Link
 							key={item.id}
 							href={item.href}
-							className="flex-row items-center gap-5 border-b border-[#344b62] p-2 highlighted:bg-[#1c324c]"
+							className="flex-row items-center gap-5 border-b border-kyoo-border p-2 highlighted:bg-kyoo-surface-hover"
 						>
 							<Poster src={item.poster} quality="low" className="video-case w-18 rounded-[2px]" />
 							<View className="flex-1">
-								<H2 className="font-headers text-2xl font-bold text-[#f5efe1]">{item.name}</H2>
-								<SubP className="mt-1 text-[#a9b8c7]">{item.kind === "serie" ? "Series" : item.kind === "movie" ? "Film" : "Collection"}</SubP>
-								{item.description && <P numberOfLines={2} className="mt-2 text-xs leading-5 text-[#a9b8c7]">{item.description}</P>}
+								<H2 className="font-headers text-2xl font-bold text-kyoo-text-primary">{item.name}</H2>
+								<SubP className="mt-1 text-kyoo-text-muted">{item.kind === "serie" ? "Series" : item.kind === "movie" ? "Film" : "Collection"}</SubP>
+								{item.description && <P numberOfLines={2} className="mt-2 text-xs leading-5 text-kyoo-text-muted">{item.description}</P>}
 							</View>
 						</Link>
 					) : (
@@ -69,9 +69,9 @@ const Shelf = ({
 				<PressableFeedback
 					onPress={onMore}
 					disabled={loading}
-					className="mt-7 self-start rounded-sm border border-[#546b82] px-6 py-3 highlighted:border-accent"
+					className="mt-7 self-start rounded-sm border border-kyoo-border-control px-6 py-3 highlighted:border-accent"
 				>
-					<P className="font-semibold text-[#f0c875]">
+					<P className="font-semibold text-kyoo-accent">
 						{loading ? "Loading…" : `More ${title.toLowerCase()}`}
 					</P>
 				</PressableFeedback>
@@ -136,10 +136,10 @@ export const BrowsePage = () => {
 		>
 			<View className="mx-3 mt-8 sm:mx-8 sm:mt-12 lg:mx-14">
 				<View className="video-section-rule mb-5 pb-5">
-					<H1 className="font-headers text-[48px] leading-[1.02] font-bold text-[#f5efe1] sm:text-[64px]">
+					<H1 className="font-headers text-[48px] leading-[1.02] font-bold text-kyoo-text-primary sm:text-[64px]">
 						Browse the shelves
 					</H1>
-					<P className="mt-2 text-sm text-[#a9b8c7]">
+					<P className="mt-2 text-sm text-kyoo-text-muted">
 						{search ? `Results for “${search}”` : "Your films, series and collections in one place."}
 					</P>
 				</View>
@@ -163,9 +163,9 @@ export const BrowsePage = () => {
 						<Shelf title="Collections" layout={layout} items={collectionShows} loading={collections.isFetching} more={!!collections.hasNextPage} onMore={() => collections.fetchNextPage()} />
 					)}
 					{!total && !isLoading && (
-						<View className="items-start border border-[#334c64] bg-[#182c44] p-7">
-							<H2 className="font-headers text-3xl text-[#f5efe1]">Nothing on this shelf</H2>
-							<P className="mt-2 text-sm text-[#a9b8c7]">Try another search or remove a filter.</P>
+						<View className="items-start border border-kyoo-border bg-kyoo-surface p-7">
+							<H2 className="font-headers text-3xl text-kyoo-text-primary">Nothing on this shelf</H2>
+							<P className="mt-2 text-sm text-kyoo-text-muted">Try another search or remove a filter.</P>
 						</View>
 					)}
 				</View>

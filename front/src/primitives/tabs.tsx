@@ -36,7 +36,7 @@ export const Tabs = <T,>({
 			// @ts-expect-error uniwind special props
 			containerClassName={cn("shrink flex-row items-center", className)}
 			className={cn(
-				"border-b border-[#405773]",
+				"border-b border-kyoo-border-strong",
 				disabled && "opacity-50",
 			)}
 			showsHorizontalScrollIndicator={false}
@@ -51,21 +51,21 @@ export const Tabs = <T,>({
 						onPress={() => setValue(x.value)}
 						className={cn(
 							"group flex-row items-center justify-center rounded-t-sm border-b-2 border-transparent px-3 py-3 outline-0",
-							"highlighted:bg-[#28435b] highlighted:outline-2 highlighted:outline-accent",
-							selected && "border-[#f0c875] bg-[#203954]",
+							"highlighted:bg-kyoo-surface-selected highlighted:outline-2 highlighted:outline-accent",
+							selected && "border-kyoo-accent bg-kyoo-surface-selected",
 						)}
 					>
 						<Icon
 							icon={x.icon}
 							className={cn(
-								"mr-1.5 h-5 w-5 fill-[#9eb2c2]",
-								selected && "fill-[#f0c875]",
+								"mr-1.5 h-5 w-5 fill-kyoo-text-muted",
+								selected && "fill-kyoo-accent",
 							)}
 						/>
 						<P
 							className={cn(
-								"text-sm font-medium text-[#b8c8d3]",
-								selected && "font-semibold text-[#f0c875]",
+								"text-sm font-medium text-kyoo-text-dim",
+								selected && "font-semibold text-kyoo-accent",
 							)}
 						>
 							{x.label}

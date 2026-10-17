@@ -61,7 +61,7 @@ export const ItemDetails = ({
 				href={moreOpened ? undefined : href}
 				onLongPress={() => setMoreOpened(true)}
 				className={cn(
-					"h-full flex-row overflow-hidden rounded-sm border border-[#344b62] bg-card",
+					"h-full flex-row overflow-hidden rounded-sm border border-kyoo-border bg-card",
 					"group outline-0 highlighted:ring-3 ring-accent focus-within:ring-3",
 				)}
 			>

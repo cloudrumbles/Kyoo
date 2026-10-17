@@ -6,6 +6,7 @@
 !/babel.config.js
 !/metro.config.js
 !/src
+!/design
 !/public
 !/scripts
 !/patches

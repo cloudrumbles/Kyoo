@@ -47,8 +47,8 @@ const SortTrigger = ({
 	return (
 		<PressableFeedback
 			className={cn(
-				"group flex-row items-center overflow-hidden rounded-sm border border-[#3e5974] bg-[#192d45] px-3 py-2 outline-0",
-				"highlighted:bg-[#2b435c]",
+				"group flex-row items-center overflow-hidden rounded-sm border border-kyoo-border-feature bg-kyoo-surface px-3 py-2 outline-0",
+				"highlighted:bg-kyoo-surface-hover",
 				className,
 			)}
 			{...tooltip(t("browse.sortby-tt"))}
@@ -79,8 +79,8 @@ const MediaTypeTrigger = ({
 	return (
 		<PressableFeedback
 			className={cn(
-				"group flex-row items-center overflow-hidden rounded-sm border border-[#3e5974] bg-[#192d45] px-3 py-2 outline-0",
-				"highlighted:bg-[#2b435c]",
+				"group flex-row items-center overflow-hidden rounded-sm border border-kyoo-border-feature bg-kyoo-surface px-3 py-2 outline-0",
+				"highlighted:bg-kyoo-surface-hover",
 				className,
 			)}
 			{...tooltip(t("browse.mediatype-tt"))}
@@ -115,8 +115,8 @@ const FilterTrigger = ({
 	return (
 		<PressableFeedback
 			className={cn(
-				"group flex-row items-center overflow-hidden rounded-sm border border-[#3e5974] bg-[#192d45] px-3 py-2 outline-0",
-				"highlighted:bg-[#2b435c]",
+				"group flex-row items-center overflow-hidden rounded-sm border border-kyoo-border-feature bg-kyoo-surface px-3 py-2 outline-0",
+				"highlighted:bg-kyoo-surface-hover",
 				className,
 			)}
 			{...props}
@@ -144,7 +144,7 @@ const FilterChip = ({
 			onPress={onRemove}
 			className={cn(
 				"flex-row items-center gap-1 rounded-sm border border-accent px-2.5 py-1",
-				"bg-[#314b60]",
+				"bg-kyoo-surface-selected",
 			)}
 		>
 			<P className="text-slate-200 text-sm dark:text-slate-300">{label}</P>

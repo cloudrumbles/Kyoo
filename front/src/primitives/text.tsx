@@ -32,10 +32,10 @@ const styleText = (
 		return (
 			<Text
 				className={cn(
-					"shrink font-sans text-base text-[#dce4e9] dark:text-[#dce4e9]",
+					"shrink font-sans text-base text-kyoo-text-body dark:text-kyoo-text-body",
 					type === "header" &&
-						"font-headers text-[#f5efe1] dark:text-[#f5efe1]",
-					type === "sub" && "text-sm text-[#a9b8c7] dark:text-[#a9b8c7]",
+						"font-headers text-kyoo-text-primary dark:text-kyoo-text-primary",
+					type === "sub" && "text-sm text-kyoo-text-muted dark:text-kyoo-text-muted",
 					custom,
 					className,
 				)}

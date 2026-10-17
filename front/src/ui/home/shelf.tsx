@@ -33,10 +33,10 @@ export const ShelfList = () => {
 					/>
 				))}
 				{!items.length && (
-					<P className="py-6 text-[#a9b8c7]">Checking the shelves…</P>
+					<P className="py-6 text-kyoo-text-muted">Checking the shelves…</P>
 				)}
 				{(series.hasNextPage || movies.hasNextPage) && (
-					<Link href="/browse" className="w-36 justify-center rounded-sm border border-[#405773] px-5">
+					<Link href="/browse" className="w-36 justify-center rounded-sm border border-kyoo-border-strong px-5">
 						<P className="text-center font-semibold text-accent">See more titles</P>
 					</Link>
 				)}

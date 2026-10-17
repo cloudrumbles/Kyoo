@@ -28,20 +28,20 @@ export const Chip = ({
 			href={href}
 			replace={replace}
 			className={cn(
-				"group justify-center overflow-hidden rounded-sm border border-[#58738a] outline-0",
+				"group justify-center overflow-hidden rounded-sm border border-kyoo-border-focus outline-0",
 				size === "small" && "px-2.5 py-1",
 				size === "medium" && "px-5 py-2",
 				size === "large" && "px-10 py-4",
-				outline && "highlighted:bg-[#2f4a63]",
-				!outline && "bg-[#2c4762] highlighted:bg-[#3a5872]",
+				outline && "highlighted:bg-kyoo-surface-hover",
+				!outline && "bg-kyoo-surface-hover highlighted:bg-kyoo-surface-hover",
 				className,
 			)}
 			{...props}
 		>
 			<P
 				className={cn(
-					outline && "text-[#f0c875] group-highlighted:text-[#f5efe1]",
-					!outline && "text-[#f5efe1] dark:text-[#f5efe1]",
+					outline && "text-kyoo-accent group-highlighted:text-kyoo-text-primary",
+					!outline && "text-kyoo-text-primary dark:text-kyoo-text-primary",
 					size === "small" && "text-sm",
 				)}
 			>
@@ -64,11 +64,11 @@ Chip.Loader = ({
 	return (
 		<View
 			className={cn(
-				"group justify-center overflow-hidden rounded-sm border border-[#58738a] outline-0",
+				"group justify-center overflow-hidden rounded-sm border border-kyoo-border-focus outline-0",
 				size === "small" && "px-2.5 py-1",
 				size === "medium" && "px-5 py-2",
 				size === "large" && "px-10 py-4",
-				!outline && "bg-[#2c4762]",
+				!outline && "bg-kyoo-surface-hover",
 				className,
 			)}
 			{...props}

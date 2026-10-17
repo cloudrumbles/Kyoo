@@ -83,10 +83,10 @@ export const EntryBox = ({
 					iconClassName="fill-slate-200 dark:fill-slate-200"
 				/>
 			</ThumbnailBackground>
-			<P numberOfLines={2} className="mt-3 w-full text-left text-sm font-semibold text-[#f5efe1] group-highlighted:text-accent">
+			<P numberOfLines={2} className="mt-3 w-full text-left text-sm font-semibold text-kyoo-text-primary group-highlighted:text-accent">
 				{name ?? t("show.episodeNoMetadata")}
 			</P>
-			<SubP numberOfLines={2} className="mt-0.5 w-full text-left text-xs text-[#9fb1c0]">
+			<SubP numberOfLines={2} className="mt-0.5 w-full text-left text-xs text-kyoo-text-muted">
 				{description}
 			</SubP>
 		</Link>
