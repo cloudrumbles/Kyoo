@@ -6,7 +6,7 @@
 	"scripts": {
 		"postinstall": "bun ./scripts/postinstall.ts",
 		"dev": "expo start --clear",
-		"web": "EXPO_NO_TELEMETRY=true expo export -p web",
+		"web": "EXPO_NO_TELEMETRY=true bun ./node_modules/expo/bin/cli export -p web",
 		"apk": "eas build --profile preview --platform android --non-interactive --json",
 		"apk:dev": "eas build --profile development --platform android --non-interactive",
 		"lint": "biome lint .",
@@ -73,6 +73,7 @@
 		"react-use-websocket": "^4.13.0",
 		"tailwind-merge": "^3.7.0",
 		"tailwindcss": "^4.3.0",
+		"three": "^0.186.1",
 		"tsx": "^4.23.15",
 		"uniwind": "^1.12.2",
 		"uuid": "^14.0.2",
@@ -84,6 +85,7 @@
 		"@types/bun": "^1.4.2",
 		"@types/react": "~19.2.15",
 		"@types/react-dom": "~19.2.7",
+		"@types/three": "^0.186.0",
 		"babel-plugin-react-compiler": "^1.0.0",
 		"react-compiler-marker": "^0.2.0",
 		"typescript": "~6.0.3"

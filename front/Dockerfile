@@ -23,6 +23,14 @@ server {
   listen 8901;
   charset utf-8;
 
+  # Large Three.js chunk is imported only when the shelf mounts.
+  # Compress it over the wire, and cache content-hashed Expo assets.
+  gzip on;
+  gzip_vary on;
+  gzip_comp_level 5;
+  gzip_min_length 1024;
+  gzip_types application/javascript text/javascript text/css application/json image/svg+xml;
+
   root /usr/share/nginx/html;
   index index.html;
 
@@ -31,6 +39,11 @@ server {
   # requests working without CORP headers on every remote asset.
   add_header Cross-Origin-Opener-Policy same-origin;
   add_header Cross-Origin-Embedder-Policy credentialless;
+
+  location ^~ /_expo/static/ {
+    expires 30d;
+    try_files \$uri =404;
+  }
 
   location / {
     try_files \$uri \$uri/ /index.html;

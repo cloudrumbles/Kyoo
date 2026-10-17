@@ -15,7 +15,7 @@
 		"jsx": "react-jsx",
 		"forceConsistentCasingInFileNames": true,
 		"allowImportingTsExtensions": true,
-		"types": ["node", "react"],
+		"types": ["node", "react", "bun"],
 		"lib": ["dom", "esnext"]
 	},
 	"include": [

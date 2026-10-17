@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { ScrollView, View } from "react-native";
 import { ItemGrid, itemMap } from "~/components/items";
-import { Collection, Movie, Serie, type Show } from "~/models";
+import { Collection, Movie, Serie, Show } from "~/models";
 import { H1, H2, Link, P, Poster, PressableFeedback, SubP } from "~/primitives";
 import { type QueryIdentifier, useInfiniteFetch } from "~/query";
 import { useQueryState } from "~/utils";

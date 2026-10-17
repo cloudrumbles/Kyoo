@@ -21,7 +21,7 @@ import { usePlayer, usePlayerState } from "react-native-omni";
 import { Icon, isTouchDevice, P } from "~/primitives";
 import { cn } from "~/utils";
 import { useRemoteKeys } from "../keyboard";
-import { toggleFullscreen } from "./misc";
+import { toggleFullscreen } from "../fullscreen";
 
 export const TouchControls = ({
 	children,

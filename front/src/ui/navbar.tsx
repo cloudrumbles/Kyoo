@@ -112,6 +112,7 @@ const NavbarLink = <AsProps = ComponentProps<typeof A>>({
 				icon={icon}
 				className="fill-[#e9d9b8] md:hidden dark:fill-[#e9d9b8]"
 			/>
+			<Text className="font-sans text-[10px] text-[#dbe4eb] md:hidden dark:text-[#dbe4eb]">{label}</Text>
 			<Text className="font-sans text-sm font-semibold text-[#dbe4eb] max-md:hidden dark:text-[#dbe4eb]">
 				{label}
 			</Text>
@@ -300,7 +301,7 @@ export const NavbarProfile = () => {
 		<Menu
 			Trigger={Avatar<PressableProps>}
 			as={PressableFeedback}
-			account={account}
+			account={account?.token ? account : undefined}
 			placeholder={account?.username}
 			alt={t("navbar.login")}
 			className="m-2"
