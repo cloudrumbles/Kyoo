@@ -43,6 +43,7 @@ import {
 	HR,
 	Icon,
 	IconButton,
+	Link,
 	Menu,
 	PressableFeedback,
 	tooltip,
@@ -51,7 +52,6 @@ import { useAccount, useAccounts } from "~/providers/account-context";
 import { logout } from "~/ui/login/logic";
 import { CastButton } from "~/ui/player/controls/misc";
 import { cn, useQueryState } from "~/utils";
-import KyooLongLogo from "~public/icon-long.svg";
 
 export const NavbarLeft = () => {
 	const { t } = useTranslation();
@@ -60,16 +60,18 @@ export const NavbarLeft = () => {
 	if (Platform.OS !== "web") return <NavbarTitle />;
 
 	return (
-		<View className="flex-row items-center gap-4">
+		<View className="flex-row items-center gap-5 lg:gap-8">
 			<NavbarTitle />
-			<NavbarLink href="/browse" label={t("navbar.browse")} icon={Browse} />
+			<NavbarLink href="/browse" label="Shelves" icon={Browse} />
 			<NavbarLink
 				href="/profiles/me"
-				label={t("navbar.profile")}
+				label="My list"
 				icon={Person}
+				className="max-sm:hidden"
 			/>
 			{account?.isAdmin && (
-				<Menu Trigger={NavbarLink} label={t("navbar.admin")} icon={Admin}>
+				<View className="max-sm:hidden">
+					<Menu Trigger={NavbarLink} label={t("navbar.admin")} icon={Admin}>
 					<Menu.Item
 						label={t("admin.unmatched.label")}
 						icon={Search}
@@ -81,7 +83,8 @@ export const NavbarLeft = () => {
 						href="/admin/streams"
 					/>
 					<Menu.Item label="Users" icon={Admin} href="/admin/users" />
-				</Menu>
+					</Menu>
+				</View>
 			)}
 		</View>
 	);
@@ -101,15 +104,15 @@ const NavbarLink = <AsProps = ComponentProps<typeof A>>({
 	return (
 		<As
 			aria-label={label}
-			className="items-center justify-center"
+			className="items-center justify-center rounded-sm px-0.5 py-2"
 			{...tooltip(label)}
 			{...(props as any)}
 		>
 			<Icon
 				icon={icon}
-				className="fill-slate-200 md:hidden dark:fill-slate-200"
+				className="fill-[#e9d9b8] md:hidden dark:fill-[#e9d9b8]"
 			/>
-			<Text className="font-headers text-lg text-slate-200 uppercase max-md:hidden dark:text-slate-200">
+			<Text className="font-sans text-sm font-semibold text-[#dbe4eb] max-md:hidden dark:text-[#dbe4eb]">
 				{label}
 			</Text>
 		</As>
@@ -119,19 +122,27 @@ const NavbarLink = <AsProps = ComponentProps<typeof A>>({
 export const NavbarTitle = ({
 	className,
 	...props
-}: Partial<ComponentProps<typeof A>>) => {
+}: Partial<ComponentProps<typeof Link>>) => {
 	const { t } = useTranslation();
 
 	return (
-		<A
+		<Link
 			href="/"
 			aria-label={t("navbar.home")}
-			className={cn("m-2 flex flex-1 items-center", className)}
+			className={cn("video-nav-brand mr-1 flex-row items-center gap-1.5 rounded-sm py-1", className)}
 			{...tooltip(t("navbar.home"))}
 			{...props}
 		>
-			<KyooLongLogo style={{ height: 24, width: (531.15 / 149) * 24 }} />
-		</A>
+			<View className="mr-1 h-7 w-7 items-center justify-center rounded-full border-2 border-[#f0c875]">
+				<View className="h-2 w-2 rounded-full bg-[#f0c875]" />
+			</View>
+			<Text className="font-headers text-[31px] leading-8 font-extrabold text-[#f5efe1]">
+				kyoo
+			</Text>
+			<Text className="font-headers text-[27px] leading-8 font-bold text-[#f0c875]">
+				video
+			</Text>
+		</Link>
 	);
 };
 
@@ -194,10 +205,10 @@ export const SearchBar = ({
 	return (
 		<Animated.View
 			className={cn(
-				"mr-2 flex-row items-center overflow-hidden rounded-full p-0 pl-4",
+				"mr-2 flex-row items-center overflow-hidden rounded-sm p-0 pl-3",
 				"ring-accent focus-within:ring-3",
 				focused && "ring-3",
-				expanded ? "bg-slate-100 dark:bg-slate-800" : "bg-transparent",
+				expanded ? "bg-[#f0ebe2] dark:bg-[#f0ebe2]" : "bg-transparent",
 				Platform.OS === "web" &&
 					overlayOnSmallScreen &&
 					expanded &&
@@ -235,7 +246,7 @@ export const SearchBar = ({
 				textAlignVertical="center"
 				className={cn(
 					"h-full min-w-0 flex-1 font-sans text-base outline-0",
-					"align-middle text-slate-600 dark:text-slate-200",
+					"align-middle text-[#101d30] dark:text-[#101d30]",
 					!expanded && "w-0 grow-0",
 					className,
 				)}
@@ -309,7 +320,16 @@ export const NavbarProfile = () => {
 				/>
 			))}
 			{accounts.length > 0 && <HR />}
+			<Menu.Item label="My list" icon={Person} href="/profiles/me" />
 			<Menu.Item label={t("misc.settings")} icon={Settings} href="/settings" />
+			{account?.isAdmin && (
+				<>
+					<HR />
+					<Menu.Item label={t("admin.unmatched.label")} icon={Browse} href="/admin/unmatched" />
+					<Menu.Item label={t("admin.streams.title")} icon={Play} href="/admin/streams" />
+					<Menu.Item label="Users" icon={Admin} href="/admin/users" />
+				</>
+			)}
 			{!account ? (
 				<>
 					<Menu.Item label={t("login.login")} icon={Login} href="/login" />
@@ -370,7 +390,7 @@ export const useScrollNavbar = ({
 
 	const nav = useNavigation();
 	const focused = useIsFocused();
-	const accent = useCSSVariable("--color-accent");
+	const accent = useCSSVariable("--color-background");
 	useLayoutEffect(() => {
 		const n = tab ? nav.getParent() : nav;
 		if (focused) {
@@ -413,7 +433,7 @@ export const HeaderBackground = ({
 	return (
 		<>
 			<Animated.View
-				className={cn("absolute z-10 w-full bg-accent", className)}
+				className={cn("absolute z-10 w-full bg-[#101d30]", className)}
 				style={[{ height }, opacity, style]}
 				{...props}
 			/>

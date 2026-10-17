@@ -24,7 +24,7 @@ export const expo: ExpoConfig = {
 			: undefined,
 		adaptiveIcon: {
 			foregroundImage: "./public/android-adaptive-icon.png",
-			backgroundColor: "#6b00b8",
+			backgroundColor: "#101d30",
 		},
 	},
 	web: {
@@ -68,7 +68,7 @@ export const expo: ExpoConfig = {
 			{
 				image: "./public/splash-screen.png",
 				resizeMode: "contain",
-				backgroundColor: "#6b00b8",
+				backgroundColor: "#101d30",
 			},
 		],
 		["react-native-omni", { castReceiver: IS_TV }],

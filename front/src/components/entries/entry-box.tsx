@@ -52,7 +52,7 @@ export const EntryBox = ({
 			onPress={videos.length > 1 ? onSelectVideos : undefined}
 			onLongPress={() => setMoreOpened(true)}
 			className={cn(
-				"group w-87.5 items-center p-1 outline-0",
+				"group w-65 items-start p-1 outline-0 sm:w-75",
 				href === null && "opacity-50",
 				className,
 			)}
@@ -63,7 +63,7 @@ export const EntryBox = ({
 				quality="low"
 				alt=""
 				className={cn(
-					"aspect-video w-full rounded",
+					"video-case aspect-video w-full rounded-[2px]",
 					"ring-accent group-highlighted:ring-3",
 				)}
 			>
@@ -83,10 +83,10 @@ export const EntryBox = ({
 					iconClassName="fill-slate-200 dark:fill-slate-200"
 				/>
 			</ThumbnailBackground>
-			<P className="text-center group-highlighted:underline">
+			<P numberOfLines={2} className="mt-3 w-full text-left text-sm font-semibold text-[#f5efe1] group-highlighted:text-accent">
 				{name ?? t("show.episodeNoMetadata")}
 			</P>
-			<SubP numberOfLines={3} className="text-center">
+			<SubP numberOfLines={2} className="mt-0.5 w-full text-left text-xs text-[#9fb1c0]">
 				{description}
 			</SubP>
 		</Link>
@@ -104,7 +104,7 @@ EntryBox.Loader = (props: object) => {
 };
 
 EntryBox.layout = {
-	size: rem(87.5),
+	size: rem(65),
 	numColumns: { xs: 3, sm: 4, md: 5, lg: 6, xl: 8 },
 	gap: { xs: rem(1), md: rem(2) },
 	layout: "grid",

@@ -175,7 +175,7 @@ export const TitleLine = ({
 	return (
 		<Container
 			className={cn(
-				"flex-1 max-sm:items-center sm:translate-y-[10%] sm:flex-row",
+				"flex-1 max-sm:items-center sm:translate-y-[7%] sm:flex-row",
 				className,
 			)}
 			{...props}
@@ -183,15 +183,15 @@ export const TitleLine = ({
 			<Poster
 				src={poster}
 				quality="medium"
-				className="w-1/2 shrink-0 max-sm:max-w-44 sm:w-1/4 sm:max-w-[30vh]"
+				className="video-poster w-1/2 shrink-0 rounded-[2px] max-sm:max-w-40 sm:w-1/4 sm:max-w-[28vh]"
 			/>
-			<View className="flex-1 self-center max-sm:mt-8 max-sm:items-center sm:pl-10 sm:max-md:self-end md:max-lg:mt-5">
+			<View className="flex-1 self-center max-sm:mt-7 max-sm:items-center sm:pl-10 sm:max-md:self-end md:max-lg:mt-5">
 				<P className="max-sm:text-center">
-					<H1 className="sm:text-slate-200">{name}</H1>
-					{date && <P className="text-3xl sm:text-slate-300"> ({date})</P>}
+					<H1 className="font-headers text-[44px] leading-[.96] font-bold text-[#f5efe1] sm:text-[64px]">{name}</H1>
+					{date && <P className="mt-1 text-lg text-[#a9b8c7] sm:text-xl"> ({date})</P>}
 				</P>
 				{tagline && (
-					<P className="font-light text-2xl max-sm:text-center sm:text-slate-200">
+					<P className="mt-2 text-base text-[#c9d5df] max-sm:text-center sm:text-xl">
 						{tagline}
 					</P>
 				)}
@@ -246,13 +246,13 @@ TitleLine.Loader = ({
 	return (
 		<Container
 			className={cn(
-				"flex-1 max-sm:items-center sm:translate-y-[10%] sm:flex-row",
+				"flex-1 max-sm:items-center sm:translate-y-[7%] sm:flex-row",
 				className,
 			)}
 			{...props}
 		>
-			<Poster.Loader className="w-1/2 shrink-0 max-sm:max-w-44 sm:w-1/4 sm:max-w-[30vh]" />
-			<View className="flex-1 self-center max-sm:mt-8 max-sm:items-center sm:pl-10 sm:max-md:self-end md:max-lg:mt-5">
+			<Poster.Loader className="video-poster w-1/2 shrink-0 rounded-[2px] max-sm:max-w-40 sm:w-1/4 sm:max-w-[28vh]" />
+			<View className="flex-1 self-center max-sm:mt-7 max-sm:items-center sm:pl-10 sm:max-md:self-end md:max-lg:mt-5">
 				<Skeleton variant="custom" className="h-10 w-2/5 max-sm:text-center" />
 				<Skeleton className="h-6 w-4/5 max-sm:text-center" />
 				<View className="flex-warp flex-row items-center max-sm:justify-center sm:mt-8">
@@ -348,7 +348,7 @@ const Description = ({
 	return (
 		<Container className="py-10" {...props}>
 			<View className="flex-1 flex-col-reverse sm:flex-row">
-				<P className="flex-1 py-5 text-justify">
+				<P className="flex-1 py-5 text-left leading-7">
 					{description ?? t("show.noOverview")}
 				</P>
 				<View className="basis-1/5 flex-row xl:-mt-25">

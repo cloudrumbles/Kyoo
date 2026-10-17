@@ -1,5 +1,5 @@
 {
-	"name": "Kyoo",
+	"name": "Kyoo Video",
 	"short_name": "Kyoo",
 	"icons": [
 		{
@@ -15,7 +15,7 @@
 			"purpose": "maskable"
 		}
 	],
-	"theme_color": "#6b00b8",
-	"background_color": "#6b00b8",
+	"theme_color": "#101d30",
+	"background_color": "#101d30",
 	"display": "standalone"
 }

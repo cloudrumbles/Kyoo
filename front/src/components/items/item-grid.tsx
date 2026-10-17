@@ -65,8 +65,8 @@ export const ItemGrid = ({
 			href={moreOpened ? undefined : href}
 			onLongPress={() => setMoreOpened(true)}
 			className={cn(
-				"group items-center p-1 outline-0",
-				horizontal && "h-full w-50",
+				"group items-start p-1 outline-0",
+				horizontal && "h-full w-43 sm:w-47",
 				className,
 			)}
 			{...props}
@@ -74,7 +74,7 @@ export const ItemGrid = ({
 			<PosterBackground
 				src={poster}
 				quality="low"
-				className="w-full ring-accent group-highlighted:ring-3"
+				className="video-case w-full rounded-[2px] ring-accent group-highlighted:ring-2"
 			>
 				<ItemWatchStatus
 					watchStatus={watchStatus}
@@ -101,12 +101,12 @@ export const ItemGrid = ({
 				/>
 			</PosterBackground>
 			<P
-				numberOfLines={subtitle ? 1 : 2}
-				className="text-center group-highlighted:underline"
+				numberOfLines={2}
+				className="mt-3 w-full text-left text-[13px] leading-5 font-semibold text-[#f3ede0] group-highlighted:text-accent sm:text-sm"
 			>
 				{name}
 			</P>
-			{subtitle && <SubP className="text-center">{subtitle}</SubP>}
+			{subtitle && <SubP numberOfLines={1} className="w-full text-left text-xs text-[#9fb1c0]">{subtitle}</SubP>}
 		</Link>
 	);
 };
@@ -119,7 +119,7 @@ ItemGrid.Loader = ({
 }) => {
 	return (
 		<View
-			className={cn("w-full items-center p-1", horizontal && "h-full w-50")}
+			className={cn("w-full items-start p-1", horizontal && "h-full w-43 sm:w-47")}
 			{...props}
 		>
 			<Poster.Loader className="w-full" />
@@ -130,8 +130,8 @@ ItemGrid.Loader = ({
 };
 
 ItemGrid.layout = {
-	size: rem(50),
-	numColumns: { xs: 3, sm: 4, md: 5, lg: 6, xl: 8 },
-	gap: { xs: rem(1), md: rem(2) },
+	size: rem(54),
+	numColumns: { xs: 2, sm: 3, md: 4, lg: 5, xl: 6 },
+	gap: { xs: rem(3), md: rem(4) },
 	layout: "grid",
 } satisfies Layout;

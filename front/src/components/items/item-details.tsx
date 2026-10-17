@@ -61,7 +61,7 @@ export const ItemDetails = ({
 				href={moreOpened ? undefined : href}
 				onLongPress={() => setMoreOpened(true)}
 				className={cn(
-					"h-full flex-row overflow-hidden rounded-xl bg-card",
+					"h-full flex-row overflow-hidden rounded-sm border border-[#344b62] bg-card",
 					"group outline-0 highlighted:ring-3 ring-accent focus-within:ring-3",
 				)}
 			>
@@ -69,7 +69,7 @@ export const ItemDetails = ({
 					src={poster}
 					alt=""
 					quality="low"
-					className="h-full rounded-none"
+					className="video-case h-full rounded-none"
 				>
 					<View className="absolute bottom-0 w-full bg-slate-900/50 p-2 px-3">
 						<P className="text-slate-200 group-highlighted:underline">{name}</P>
@@ -108,7 +108,7 @@ export const ItemDetails = ({
 				className={cn(
 					"absolute right-0 bottom-0 left-0 ml-48 h-14",
 					"flex-row items-center justify-end overflow-hidden bg-popover",
-					"overflow-hidden rounded-br-xl",
+					"overflow-hidden rounded-br-sm",
 				)}
 			>
 				{genres && (

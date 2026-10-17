@@ -47,8 +47,8 @@ const SortTrigger = ({
 	return (
 		<PressableFeedback
 			className={cn(
-				"group flex-row items-center overflow-hidden rounded-full px-2 outline-0",
-				"highlighted:bg-accent",
+				"group flex-row items-center overflow-hidden rounded-sm border border-[#3e5974] bg-[#192d45] px-3 py-2 outline-0",
+				"highlighted:bg-[#2b435c]",
 				className,
 			)}
 			{...tooltip(t("browse.sortby-tt"))}
@@ -79,8 +79,8 @@ const MediaTypeTrigger = ({
 	return (
 		<PressableFeedback
 			className={cn(
-				"group flex-row items-center overflow-hidden rounded-full px-2 outline-0",
-				"highlighted:bg-accent",
+				"group flex-row items-center overflow-hidden rounded-sm border border-[#3e5974] bg-[#192d45] px-3 py-2 outline-0",
+				"highlighted:bg-[#2b435c]",
 				className,
 			)}
 			{...tooltip(t("browse.mediatype-tt"))}
@@ -115,8 +115,8 @@ const FilterTrigger = ({
 	return (
 		<PressableFeedback
 			className={cn(
-				"group flex-row items-center overflow-hidden rounded-full px-2 outline-0",
-				"highlighted:bg-accent",
+				"group flex-row items-center overflow-hidden rounded-sm border border-[#3e5974] bg-[#192d45] px-3 py-2 outline-0",
+				"highlighted:bg-[#2b435c]",
 				className,
 			)}
 			{...props}
@@ -143,8 +143,8 @@ const FilterChip = ({
 		<PressableFeedback
 			onPress={onRemove}
 			className={cn(
-				"flex-row items-center gap-1 rounded-4xl border border-accent px-2.5 py-1",
-				"bg-accent",
+				"flex-row items-center gap-1 rounded-sm border border-accent px-2.5 py-1",
+				"bg-[#314b60]",
 			)}
 		>
 			<P className="text-slate-200 text-sm dark:text-slate-300">{label}</P>
@@ -245,8 +245,8 @@ export const BrowseSettings = ({
 					containerClassName="mx-8 my-2 h-12"
 				/>
 			)}
-			<View className="my-2 flex-1 flex-row flex-wrap items-center justify-between sm:mx-8">
-				<View className="flex-1 flex-row flex-wrap gap-3">
+			<View className="my-2 w-full flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+				<View className="w-full flex-row flex-wrap gap-2 sm:w-auto sm:flex-1 sm:gap-3">
 					<Menu
 						Trigger={MediaTypeTrigger}
 						mediaType={mediaType as keyof typeof MediaTypeIcons}
@@ -378,7 +378,7 @@ export const BrowseSettings = ({
 						}
 					/>
 				</View>
-				<View className="flex-row">
+				<View className="w-full flex-row items-center justify-between sm:w-auto sm:justify-start">
 					<Menu Trigger={SortTrigger} sortBy={sortBy}>
 						{() => (
 							<>
@@ -425,7 +425,7 @@ export const BrowseSettings = ({
 				excludedGenres.length > 0 ||
 				studioSlugs.length > 0 ||
 				staffSlugs.length > 0) && (
-				<View className="mx-8 mb-2 flex-1 flex-row flex-wrap gap-2">
+				<View className="mb-2 flex-row flex-wrap gap-2">
 					{mediaType !== "all" && (
 						<FilterChip
 							label={t(

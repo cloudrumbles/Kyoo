@@ -21,7 +21,7 @@ export const NextupList = () => {
 
 	if (!account) {
 		return (
-			<Header title={t("home.watchlist")}>
+			<Header title="Continue watching">
 				<View className="items-center justify-center">
 					<P>{t("home.watchlistLogin")}</P>
 					<Button
@@ -37,7 +37,7 @@ export const NextupList = () => {
 
 	return (
 		<>
-			<Header title={t("home.watchlist")}>
+			<Header title="Continue watching">
 				<InfiniteFetch
 					query={NextupList.query()}
 					layout={{ ...ItemGrid.layout, layout: "horizontal" }}

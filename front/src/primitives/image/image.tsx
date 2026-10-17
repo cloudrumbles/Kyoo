@@ -83,13 +83,13 @@ export const PosterPlaceholder = ({
 	return (
 		<View
 			className={cn(
-				"aspect-2/3 items-center justify-center overflow-hidden rounded bg-gray-300",
+				"aspect-2/3 items-center justify-center overflow-hidden rounded-sm bg-[#263c53]",
 				className,
 			)}
 			{...props}
 		>
 			<KyooLogo
-				color="#1f1e2f"
+				color="#8199aa"
 				style={{ width: "50%", aspectRatio: "289.35/296.15" }}
 			/>
 			{children}

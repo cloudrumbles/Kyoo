@@ -2,7 +2,6 @@ import { type ComponentProps, useDeferredValue, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Path } from "react-native-svg";
 import { EntryLine, entryDisplayNumber } from "~/components/entries";
 import {
 	EntrySelect,
@@ -20,16 +19,9 @@ import { EntryList } from "./season";
 import { InfoShelf } from "./shelf";
 import { Staff } from "./staff";
 
-export const SvgWave = (props: ComponentProps<typeof Svg>) => {
-	// aspect-[width/height]: width/height of the svg
-	return (
-		<View className="ml-[-10px] aspect-612/52 w-[110%]">
-			<Svg width="100%" height="100%" viewBox="0 372.979 612 52.771" {...props}>
-				<Path d="M0,375.175c68,-5.1,136,-0.85,204,7.948c68,9.052,136,22.652,204,24.777s136,-8.075,170,-12.878l34,-4.973v35.7h-612" />
-			</Svg>
-		</View>
-	);
-};
+export const SvgWave = (_props: ComponentProps<typeof Svg>) => (
+	<View className="h-1 w-full bg-[#344b62]" />
+);
 
 export const NextUp = ({
 	entry,
@@ -47,7 +39,7 @@ export const NextUp = ({
 
 	return (
 		<View className="m-4 flex-1">
-			<Container className="overflow-hidden rounded-2xl bg-card py-4">
+			<Container className="overflow-hidden rounded-sm border border-[#344b62] bg-card py-4">
 				<H2 className="mb-4 ml-2">{t("show.nextUp")}</H2>
 				<EntryLine
 					{...entry}
@@ -73,7 +65,7 @@ NextUp.Loader = () => {
 
 	return (
 		<View className="m-4 flex-1">
-			<Container className="overflow-hidden rounded-2xl bg-card py-4">
+			<Container className="overflow-hidden rounded-sm border border-[#344b62] bg-card py-4">
 				<H2 className="ml-4">{t("show.nextUp")}</H2>
 				<EntryLine.Loader />
 			</Container>

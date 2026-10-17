@@ -1,36 +1,47 @@
 import type { ReactNode } from "react";
-import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { ItemGrid, itemMap } from "~/components/items";
 import { type Genre, Show } from "~/models";
-import { H3 } from "~/primitives";
+import { H3, Link, P } from "~/primitives";
 import { InfiniteFetch, type QueryIdentifier } from "~/query";
-import { EmptyView } from "~/ui/empty-view";
 
 export const Header = ({
 	title,
 	children,
+	action,
+	href,
 }: {
 	title: string;
 	children?: ReactNode;
+	action?: string;
+	href?: string;
 }) => {
 	return (
 		<View scrollSnapAlign="start">
-			<H3 className="m-2 flex-row justify-between px-1">{title}</H3>
+			<View className="video-section-rule mb-4 flex-row items-end justify-between gap-3 pb-3">
+				<H3 className="flex-1 font-headers text-[29px] leading-8 font-bold text-[#f5efe1] sm:text-[34px]">
+					{title}
+				</H3>
+				{action && href ? (
+					<Link href={href} className="rounded-sm px-1 py-2">
+						<P className="text-xs font-semibold text-[#f0c875] sm:text-sm">
+							{action}
+						</P>
+					</Link>
+				) : null}
+			</View>
 			{children}
 		</View>
 	);
 };
 
 export const GenreGrid = ({ genre }: { genre: Genre }) => {
-	const { t } = useTranslation();
-
+	const query = GenreGrid.query(genre);
 	return (
-		<Header title={t(`genres.${genre}`)}>
+		<Header title={genre}>
 			<InfiniteFetch
-				query={GenreGrid.query(genre)}
+				query={query}
 				layout={{ ...ItemGrid.layout, layout: "horizontal" }}
-				Empty={<EmptyView message={t("home.none")} className="py-6" />}
 				Render={({ item }) => <ItemGrid {...itemMap(item)} horizontal />}
 				Loader={() => <ItemGrid.Loader horizontal />}
 			/>
@@ -45,7 +56,6 @@ GenreGrid.query = (genre: Genre): QueryIdentifier<Show> => ({
 	params: {
 		filter: `genres has ${genre}`,
 		sort: "random",
-		// Limit the initial numbers of items
 		limit: 10,
 	},
 });

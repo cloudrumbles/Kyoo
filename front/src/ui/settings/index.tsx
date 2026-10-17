@@ -15,7 +15,7 @@ export const SettingsPage = () => {
 			<ScrollView
 				snapToAlignment="item"
 				focusable={false}
-				contentContainerClassName="gap-8"
+				contentContainerClassName="gap-8 py-6 pb-20"
 			>
 				<GeneralSettings />
 				{account && <PlaybackSettings />}

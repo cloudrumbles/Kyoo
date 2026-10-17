@@ -1,101 +1,41 @@
-import {
-	LegendList,
-	type LegendListComponent,
-} from "@legendapp/list/react-native";
-import { type ReactElement, useMemo } from "react";
-import { View } from "react-native";
-import { createAnimatedComponent } from "react-native-reanimated";
-import { Genre } from "~/models";
+import { ScrollView, RefreshControl, View } from "react-native";
 import { useRefresh } from "~/query";
-import { shuffle } from "~/utils";
-import { useHeroHeight } from "../hero";
-import { HeaderBackground, useScrollNavbar } from "../navbar";
-import { GenreGrid } from "./genre";
-import { Header } from "./header";
-import { NewsList } from "./news";
+import { Header as FeaturedHeader } from "./header";
 import { NextupList } from "./nextup";
-import { Recommended } from "./recommended";
-import { VerticalRecommended } from "./vertical";
-
-const AnimatedLegendList = createAnimatedComponent(
-	LegendList,
-) as LegendListComponent;
+import { NewsList } from "./news";
+import { ShelfList } from "./shelf";
 
 export const HomePage = () => {
-	const genres = useMemo(() => shuffle(Object.values(Genre.enum)), []);
-	const [isRefreshing, refresh] = useRefresh(HomePage.queries(genres));
-	const imageHeight = useHeroHeight();
-	const { scrollHandler, headerProps } = useScrollNavbar({
-		imageHeight,
-		tab: true,
-	});
-
+	const [isRefreshing, refresh] = useRefresh(HomePage.queries());
 	return (
-		<>
-			<HeaderBackground {...headerProps} />
-			<AnimatedLegendList
-				estimatedItemSize={340}
-				estimatedHeaderSize={imageHeight}
-				drawDistance={600}
-				snapToAlignment="item"
-				getItemType={(el: ReactElement) => {
-					switch (el.type) {
-						case GenreGrid:
-							return "genre";
-						case Recommended:
-							return "recommended";
-						case VerticalRecommended:
-							return "vertical";
-						case NextupList:
-							return "nextup";
-						case NewsList:
-							return "news";
-						default:
-							console.error("unhandled item type in home screen", el);
-							return "other";
-					}
-				}}
-				onScroll={scrollHandler}
-				scrollEventThrottle={16}
-				focusable={false}
-				onRefresh={refresh}
-				refreshing={isRefreshing}
-				progressViewOffset={60}
-				ListHeaderComponent={
-					<View scrollSnapAlign="start">
-						<Header />
-					</View>
-				}
-			>
+		<ScrollView
+			className="flex-1 bg-background"
+			focusable={false}
+			showsVerticalScrollIndicator={false}
+			refreshControl={
+				<RefreshControl
+					refreshing={isRefreshing}
+					onRefresh={refresh}
+					tintColor="#f0c875"
+					colors={["#f0c875"]}
+				/>
+			}
+			contentContainerStyle={{ paddingBottom: 84 }}
+		>
+			<FeaturedHeader />
+			<View className="mx-3 mt-9 gap-10 sm:mx-8 sm:mt-12 lg:mx-14">
 				<NextupList />
+				<ShelfList />
 				<NewsList />
-				{genres
-					.filter((_, i) => i < 2)
-					.map((x) => (
-						<GenreGrid key={x} genre={x} />
-					))}
-				<Recommended />
-				{genres
-					.filter((_, i) => i >= 2 && i < 6)
-					.map((x) => (
-						<GenreGrid key={x} genre={x} />
-					))}
-				<VerticalRecommended />
-				{genres
-					.filter((_, i) => i >= 6)
-					.map((x) => (
-						<GenreGrid key={x} genre={x} />
-					))}
-			</AnimatedLegendList>
-		</>
+			</View>
+		</ScrollView>
 	);
 };
 
-HomePage.queries = (randomItems: Genre[]) => [
-	Header.query(),
+HomePage.queries = () => [
+	FeaturedHeader.query(),
 	NextupList.query(),
+	ShelfList.seriesQuery(),
+	ShelfList.moviesQuery(),
 	NewsList.query(),
-	...randomItems.filter((_, i) => i < 6).map((x) => GenreGrid.query(x)),
-	Recommended.query(),
-	VerticalRecommended.query(),
 ];

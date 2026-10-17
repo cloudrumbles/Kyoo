@@ -44,9 +44,9 @@ export const Button = <AsProps = PressableProps>({
 			disabled={disabled}
 			className={cn(
 				"flex-row items-center justify-center overflow-hidden",
-				"rounded-4xl border-3 border-accent p-1 px-6 outline-0",
-				disabled && "border-slate-600",
-				"group highlighted:bg-accent",
+				"rounded-sm border border-[#647d92] bg-[#162b44] px-4 py-2.5 outline-0",
+				disabled && "border-[#344b62] opacity-50",
+				"group highlighted:border-accent highlighted:bg-[#29465f]",
 				className,
 			)}
 			{...(props as AsProps)}
@@ -56,7 +56,7 @@ export const Button = <AsProps = PressableProps>({
 			)}
 			{left}
 			{text && (
-				<P className="text-center group-highlighted:text-slate-200">{text}</P>
+				<P className="text-center font-medium text-[#f5efe1] group-highlighted:text-[#f0c875]">{text}</P>
 			)}
 			{children}
 			{right}

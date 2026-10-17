@@ -6,11 +6,11 @@ export default function Root({ children }: PropsWithChildren) {
 	return (
 		<html lang="en-US">
 			<head>
-				<title>Kyoo</title>
+				<title>Kyoo Video</title>
 				<meta charSet="utf-8" />
 				<meta
 					name="description"
-					content="A portable and vast media library solution."
+					content="Browse your personal collection of films and series."
 				/>
 				<meta
 					name="viewport"
@@ -43,7 +43,7 @@ export default function Root({ children }: PropsWithChildren) {
 					sizes="96x96"
 					media="(prefers-color-scheme: dark)"
 				/>
-				<meta name="apple-mobile-web-app-title" content="Kyoo" />
+				<meta name="apple-mobile-web-app-title" content="Kyoo Video" />
 				<link
 					rel="apple-touch-icon"
 					sizes="180x180"

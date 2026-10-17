@@ -29,50 +29,50 @@ export const Tabs = <T,>({
 		value: T;
 		icon: IconType;
 	}[];
+
 	return (
 		<ScrollView
 			horizontal
 			// @ts-expect-error uniwind special props
 			containerClassName={cn("shrink flex-row items-center", className)}
 			className={cn(
-				"rounded-4xl border-3 border-accent p-1",
-
-				disabled && "border-slate-600",
+				"border-b border-[#405773]",
+				disabled && "opacity-50",
 			)}
+			showsHorizontalScrollIndicator={false}
 			{...props}
 		>
-			{tabs.map((x) => (
-				<Pressable
-					key={`${x.value}`}
-					disabled={disabled}
-					onPress={() => setValue(x.value)}
-					className={cn(
-						"group flex-row items-center justify-center rounded-3xl px-4 py-2 outline-0",
-						x.value === value && "bg-accent",
-						"highlighted:outline-3 highlighted:outline-accent",
-					)}
-				>
-					<Icon
-						icon={x.icon}
+			{tabs.map((x) => {
+				const selected = x.value === value;
+				return (
+					<Pressable
+						key={`${x.value}`}
+						disabled={disabled}
+						onPress={() => setValue(x.value)}
 						className={cn(
-							"mx-1",
-							x.value === value
-								? "fill-slate-200"
-								: "group-highlighted:fill-slate-200",
-						)}
-					/>
-					<P
-						className={cn(
-							"ml-1",
-							x.value === value
-								? "text-slate-200"
-								: "group-highlighted:text-slate-200",
+							"group flex-row items-center justify-center rounded-t-sm border-b-2 border-transparent px-3 py-3 outline-0",
+							"highlighted:bg-[#28435b] highlighted:outline-2 highlighted:outline-accent",
+							selected && "border-[#f0c875] bg-[#203954]",
 						)}
 					>
-						{x.label}
-					</P>
-				</Pressable>
-			))}
+						<Icon
+							icon={x.icon}
+							className={cn(
+								"mr-1.5 h-5 w-5 fill-[#9eb2c2]",
+								selected && "fill-[#f0c875]",
+							)}
+						/>
+						<P
+							className={cn(
+								"text-sm font-medium text-[#b8c8d3]",
+								selected && "font-semibold text-[#f0c875]",
+							)}
+						>
+							{x.label}
+						</P>
+					</Pressable>
+				);
+			})}
 		</ScrollView>
 	);
 };

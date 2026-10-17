@@ -21,17 +21,17 @@ export const Preference = ({
 }) => {
 	return (
 		<View
-			className="m-2 flex-1 flex-row items-center justify-between"
+			className="mx-3 my-4 flex-1 flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between"
 			{...props}
 		>
-			<View className="mx-4 shrink flex-row items-center gap-4">
-				{customIcon ?? <Icon icon={icon} />}
-				<View className="shrink">
-					<P>{label}</P>
-					<SubP>{description}</SubP>
+			<View className="mx-1 min-w-0 flex-row items-start gap-3 sm:flex-1 sm:items-center">
+				{customIcon ?? <Icon icon={icon} className="mt-0.5 h-5 w-5 shrink-0 fill-[#a9b8c7] sm:mt-0" />}
+				<View className="min-w-0 flex-1">
+					<P className="font-semibold text-[#f5efe1]">{label}</P>
+					<SubP className="mt-0.5 text-sm leading-5 text-[#9fb1c0]">{description}</SubP>
 				</View>
 			</View>
-			<View className="mx-4 max-w-1/2 flex-row flex-wrap justify-end gap-2">
+			<View className="ml-9 mr-1 flex-row flex-wrap items-center justify-start gap-2 sm:ml-3 sm:mr-2 sm:max-w-[45%] sm:justify-end">
 				{children}
 			</View>
 		</View>
@@ -52,9 +52,9 @@ export const SettingsContainer = ({
 }) => {
 	return (
 		<Container {...props}>
-			<H1 className="my-2 text-4xl">{title}</H1>
+			<H1 className="mb-3 mt-2 font-headers text-[36px] font-bold text-[#f5efe1]">{title}</H1>
 			{extraTop}
-			<View className="rounded bg-card">
+			<View className="rounded-sm border border-[#344b62] bg-card">
 				{Children.toArray(children)
 					.filter((x) => x)
 					.map((x, i) => (

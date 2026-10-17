@@ -13,7 +13,7 @@ export const unstable_settings = {
 
 export default function Layout() {
 	const insets = useSafeAreaInsets();
-	const accent = useCSSVariable("--color-accent");
+	const accent = useCSSVariable("--color-background");
 	const { color } = useResolveClassNames("text-slate-200");
 
 	return (

@@ -16,7 +16,7 @@ export const NewsList = () => {
 
 	return (
 		<>
-			<Header title={t("home.news")}>
+			<Header title="Recently added" action="Browse all" href="/browse">
 				<InfiniteFetch
 					query={NewsList.query()}
 					layout={{ ...EntryBox.layout, layout: "horizontal" }}
