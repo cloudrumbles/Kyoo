@@ -3,7 +3,9 @@ package api
 import (
 	"errors"
 	"fmt"
+	"mime"
 	"net/http"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -33,6 +35,7 @@ func RegisterStreamHandlers(e *echo.Group, transcoder *src.Transcoder) {
 //
 // @Description  Retrieve the raw video stream, in the same container as the one on the server.
 // @Description  No transcoding or transmuxing is done.
+// @Description  Add ?download=1 to save the original file with its original name.
 //
 // @Tags         streams
 // @Param        path  path   string    true  "Base64 of a video's path"  format(base64) example(L3ZpZGVvL2J1YmJsZS5ta3YK)
@@ -45,7 +48,18 @@ func DirectStream(c *echo.Context) error {
 	if err != nil {
 		return err
 	}
+	if c.QueryParam("download") == "1" {
+		// An attachment (rather than a video player) also works in Safari.
+		// MIME formatting quotes punctuation and encodes Unicode safely.
+		c.Response().Header().Set("Content-Disposition", downloadDisposition(path))
+	}
 	return c.File(strings.TrimLeft(path, "/"))
+}
+
+func downloadDisposition(path string) string {
+	return mime.FormatMediaType("attachment", map[string]string{
+		"filename": filepath.Base(path),
+	})
 }
 
 // @Summary  Get master playlist

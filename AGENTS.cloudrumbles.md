@@ -25,12 +25,21 @@ The box is shared with other production services (avvai, threadline, chirp, MCPs
 ## Build and deploy
 
 ```sh
-# frontend (the patched service)
-cd /srv/kyoo/src && nice -n 15 sudo docker build -t kyoo_front:cloudrumbles front
-cd /srv/kyoo/app && sudo docker compose up -d front
+# build the patched services, then update only those containers
+cd /srv/kyoo/src
+nice -n 15 sudo docker build -t kyoo_front:downloads-20261019-v2 front
+nice -n 15 sudo docker build -t kyoo_transcoder:downloads-20261019 transcoder
+cd /srv/kyoo/app
+sudo docker compose up -d --no-deps front transcoder
 ```
 
-The other services (api, auth, scanner, transcoder) run upstream edge images pinned by digest in the override. To change one, build it from its folder here the same way, set `image:` in `/srv/kyoo/app/docker-compose.override.yml`, then `docker compose up -d <service>`. Keep `deploy/docker-compose.override.yml` in sync with the live file.
+The other services (api, auth, scanner) run upstream edge images pinned by digest in the override. To change one, build it from its folder here the same way, set `image:` in `/srv/kyoo/app/docker-compose.override.yml`, then `docker compose up -d <service>`. Keep `deploy/docker-compose.override.yml` in sync with the live file.
+
+## Original video downloads
+
+Web downloads are available on episode rows, film details, the selected episode or film on the home shelf, and the player header. A title with multiple files opens a chooser; each choice saves its own original file. The existing three-dot menu also supports mouse and keyboard downloads.
+
+The frontend sends the browser to `/api/videos/{slug}/direct?download=1`. The API preserves the query when redirecting to the existing authenticated direct stream. `transcoder/src/api/streams.go` adds an attachment Content-Disposition with the original basename, safely encoded for punctuation and Unicode. Normal playback has no attachment header. The file is not transcoded or buffered in JavaScript, and the existing byte-range response supports resumed transfers.
 
 ## Library
 

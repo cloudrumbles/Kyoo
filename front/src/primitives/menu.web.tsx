@@ -167,7 +167,7 @@ const MenuItem = forwardRef<
 
 	if (href && download) {
 		content = (
-			<a href={href} download className="flew-row flex items-center">
+			<a href={href} download>
 				{content}
 			</a>
 		);
@@ -177,6 +177,7 @@ const MenuItem = forwardRef<
 
 	return (
 		<DropdownMenu.Item
+			asChild={Boolean(href && download)}
 			ref={ref}
 			{...linkProps}
 			onSelect={(e) => {

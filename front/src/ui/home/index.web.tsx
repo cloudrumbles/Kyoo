@@ -2,6 +2,7 @@ import { useRouter } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { EntrySelect, type EntrySelectEntry } from "~/components/entries/select";
 import { entryDisplayNumber } from "~/components/entries";
+import { VideoDownload } from "~/components/video-download";
 import { Collection, Entry, Movie, Serie } from "~/models";
 import type { KImage } from "~/models";
 import { useAccount, useToken } from "~/providers/account-context";
@@ -40,7 +41,7 @@ export const HomePage = () => {
 	const films = useInfiniteFetch<Movie>({
 		parser: Movie, infinite: true,
 		path: ["api", "movies"],
-		params: { limit: 12, sort: "name" },
+		params: { limit: 12, sort: "name", with: ["videos"] },
 	});
 	const collections = useInfiniteFetch<Collection>({
 		parser: Collection, infinite: true,
@@ -146,6 +147,11 @@ export const HomePage = () => {
 	const shelf = shelfData.find(s => s.id === shelfId)!;
 	const currentIndex = Math.min(active, Math.max(shelf.cases.length - 1, 0));
 	const currentCase = shelf.cases[currentIndex];
+	const downloadVideos = shelfId === "continue"
+		? continuing.items?.[currentIndex]?.videos
+		: shelfId === "arrivals"
+			? newest.items?.[currentIndex]?.videos
+			: films.items?.find(item => item.id === currentCase?.id)?.videos;
 
 	const visitShelf = useCallback((next: ShelfName) => {
 		setShelfId(next);
@@ -239,6 +245,7 @@ export const HomePage = () => {
 							<button type="button" className="store-control" onClick={() => currentCase && pick(currentIndex)} disabled={!currentCase}>Pick up case</button>
 						)}
 						{currentCase?.href && currentCase.playHref && <button type="button" className="store-control" onClick={() => router.push(currentCase.href!)}>Details</button>}
+						{downloadVideos?.length ? <VideoDownload videos={downloadVideos} showLabel className="store-control" /> : null}
 						<button type="button" className="store-control store-play" disabled={!currentCase?.playHref && !currentCase?.href} onClick={openPlayback}>
 							<span aria-hidden="true">{currentCase?.playHref ? "▶" : "◉"}</span> {currentCase?.playHref ? "Play" : "Open case"}
 						</button>

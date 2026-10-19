@@ -2,6 +2,7 @@ import ArrowBack from "@material-symbols/svg-400/rounded/arrow_back-fill.svg";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { View, type ViewProps } from "react-native";
+import { VideoDownload } from "~/components/video-download";
 import type { KImage } from "~/models";
 import {
 	Avatar,
@@ -13,7 +14,7 @@ import {
 	Skeleton,
 	tooltip,
 } from "~/primitives";
-import { cn } from "~/utils";
+import { cn, useQueryState } from "~/utils";
 import { useCaster } from "../cast-session";
 
 export const Back = ({
@@ -32,9 +33,10 @@ export const Back = ({
 	const { t } = useTranslation();
 	const router = useRouter();
 	const caster = useCaster();
+	const [videoSlug] = useQueryState("slug", undefined);
 
 	return (
-		<View className={cn("flex-row items-center", className)} {...props}>
+		<View className={cn("z-10 flex-row items-center", className)} {...props}>
 			<IconButton
 				icon={ArrowBack}
 				as={PressableFeedback}
@@ -55,11 +57,18 @@ export const Back = ({
 					className="my-4 touch:my-2 ml-4 touch:ml-3 h-8 w-36 rounded-none bg-transparent"
 				/>
 			) : name ? (
-				<H1 className="my-4 touch:my-2 ml-4 touch:ml-3 text-2xl text-slate-200 touch:text-xl">
+				<H1 className="my-4 touch:my-2 ml-4 touch:ml-3 flex-1 shrink text-2xl text-slate-200 touch:text-xl">
 					{name}
 				</H1>
 			) : (
 				<Skeleton className="my-4 touch:my-2 w-20" />
+			)}
+			{videoSlug && (
+				<VideoDownload
+					videos={[{ slug: videoSlug }]}
+					className="ml-auto mr-4 touch:mr-2"
+					iconClassName="fill-slate-200 touch:h-5 touch:w-5"
+				/>
 			)}
 			{caster && (
 				<View className="mr-4 touch:mr-2 ml-auto flex-row items-center">

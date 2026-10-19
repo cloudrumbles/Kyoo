@@ -14,11 +14,11 @@ services:
     image: ghcr.io/zoriya/kyoo_auth@sha256:7124ed01e885d69315a5eeb56b04f72c88ddc76294aa6799fb51964727fc2e5e
     mem_limit: 192m
   front:
-    image: kyoo_front:cloudrumbles
+    image: kyoo_front:downloads-20261019-v2
     mem_limit: 384m
   scanner:
     image: ghcr.io/zoriya/kyoo_scanner@sha256:d6b920804d680b35e553f60f27e6a7d79f4980fa3af6da546d874b0d7885b139
     mem_limit: 512m
   transcoder:
-    image: ghcr.io/zoriya/kyoo_transcoder@sha256:8fc1df50c952fb07d989bc489047798dba6a2a929ae0ab7133d5b3e814180644
+    image: kyoo_transcoder:downloads-20261019
     mem_limit: 1200m

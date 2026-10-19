@@ -10,9 +10,10 @@ import VideoLibrary from "@material-symbols/svg-400/rounded/video_library-fill.s
 import { useRouter } from "expo-router";
 import type { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
+import { videoDownloadUrl } from "~/downloads";
 import { WatchStatusV } from "~/models";
 import { Alert, HRP, IconButton, Menu, tooltip } from "~/primitives";
-import { useAccount } from "~/providers/account-context";
+import { useAccount, useToken } from "~/providers/account-context";
 import { useMutation } from "~/query";
 import { cn } from "~/utils";
 import { watchListIcon } from "./watchlist-info";
@@ -33,6 +34,7 @@ export const EntryContext = ({
 } & Partial<ComponentProps<typeof Menu>> &
 	Partial<ComponentProps<typeof IconButton>>) => {
 	const account = useAccount();
+	const { apiUrl } = useToken();
 	const { t } = useTranslation();
 
 	const markAsSeenMutation = useMutation({
@@ -80,7 +82,7 @@ export const EntryContext = ({
 							<Menu.Item
 								label={t("home.episodeMore.download")}
 								icon={Download}
-								href={`/api/videos/${videoSlug}/direct`}
+								href={videoDownloadUrl(videoSlug, apiUrl)}
 								download
 							/>
 							<Menu.Item
@@ -118,6 +120,7 @@ export const ShowContext = ({
 } & Partial<ComponentProps<typeof Menu>> &
 	Partial<ComponentProps<typeof IconButton>>) => {
 	const account = useAccount();
+	const { apiUrl } = useToken();
 	const router = useRouter();
 	const { t } = useTranslation();
 
@@ -183,7 +186,7 @@ export const ShowContext = ({
 							<Menu.Item
 								label={t("home.episodeMore.download")}
 								icon={Download}
-								href={`/api/videos/${videoSlug}/direct`}
+								href={videoDownloadUrl(videoSlug, apiUrl)}
 								download
 							/>
 							<Menu.Item

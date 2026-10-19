@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Platform, type PressableProps, View } from "react-native";
 import { EntryContext } from "~/components/items/context-menus";
 import { ItemProgress } from "~/components/items/item-grid";
+import { VideoDownload } from "~/components/video-download";
 import type { Entry, KImage } from "~/models";
 import {
 	CroppedText,
@@ -140,6 +141,7 @@ export const EntryLine = ({
 									</PressableFeedback>
 								)}
 							</View>
+							<VideoDownload videos={videos} className="ml-2 self-end" />
 							<EntryContext
 								kind={kind}
 								slug={slug}

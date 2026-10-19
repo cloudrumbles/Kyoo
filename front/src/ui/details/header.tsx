@@ -13,6 +13,7 @@ import {
 import { ShowContext } from "~/components/items/context-menus";
 import { WatchListInfo } from "~/components/items/watchlist-info";
 import { Rating } from "~/components/rating";
+import { VideoDownload } from "~/components/video-download";
 import {
 	type Entry,
 	type Genre,
@@ -97,6 +98,9 @@ const ButtonList = ({
 							})}
 					{...tooltip(t("show.play"))}
 				/>
+			)}
+			{kind === "movie" && videos && (
+				<VideoDownload videos={videos} showLabel className="mx-2" />
 			)}
 			{trailerUrl && (
 				<IconButton

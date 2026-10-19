@@ -3,6 +3,7 @@ import PlayArrow from "@material-symbols/svg-400/rounded/play_arrow-fill.svg";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Platform, View } from "react-native";
+import { VideoDownload } from "~/components/video-download";
 import type { Entry } from "~/models";
 import {
 	HR,
@@ -79,6 +80,7 @@ export const EntrySelect = ({
 										</SubP>
 									</View>
 								</Link>
+								<VideoDownload videos={[x]} />
 								<IconButton
 									icon={MovieInfo}
 									as={Link}
